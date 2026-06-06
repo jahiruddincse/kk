@@ -813,13 +813,14 @@ let selectedCategory = null;
 
 const TRANSLATIONS = {
     en: {
-        nav_process: "Process",
-        nav_life_navigator: "Life Navigator",
-        nav_chat: "AI Navigator",
-        nav_tracker: "My Cases",
-        nav_gap: "Gap Detector",
-        nav_ne: "Northeast Special",
-        nav_helplines: "Helplines",
+        nav_home: "Home",
+        nav_navigator: "AI Navigator",
+        nav_gap: "Doc Gap",
+        nav_benefits: "Benefits",
+        nav_gps: "GPS",
+        nav_ne: "Northeast",
+        nav_score: "Score",
+        nav_schemes: "Schemes",
         hero_badge: "National Citizen-Rights Infrastructure",
         hero_title: 'When bureaucracy gets complicated, <span class="highlight-green">Haqqdar</span> shows the way.',
         hero_subtitle: "Millions of Indians lose benefits, wages, justice, and opportunities simply because they do not know the next step. Haqqdar uses AI to identify your rights, generate legal documents, and guide you through every escalation path — in your language.",
@@ -840,7 +841,7 @@ const TRANSLATIONS = {
         step6_title: "Resolution Guidance",
         step6_desc: "Follow-through templates until your case reaches a verdict.",
         showcase_tag: "INTELLIGENCE PLATFORM",
-        showcase_title: "Engineered to <span class="gradient-text">Bridge the Power Gap</span>",
+        showcase_title: "Engineered to <span class=\"gradient-text\">Bridge the Power Gap</span>",
         showcase_desc: "Haqqdar is not just a chatbot. It is a digital public utility designed to help you navigate hostile bureaucratic systems.",
         chat_welcome: "Namaste! I'm Haqqdar — your legal rights assistant. Tell me what happened to you in your own words. For example:",
         chat_placeholder: "Describe your situation in any language... (e.g. My salary has not been paid...)",
@@ -894,13 +895,14 @@ const TRANSLATIONS = {
         settings_save: "Save Config"
     },
     hi: {
-        nav_process: "प्रक्रिया",
-        nav_life_navigator: "लाइफ नेविगेटर",
-        nav_chat: "AI नेविगेटर",
-        nav_tracker: "मेरे केस",
-        nav_gap: "गैप डिटेक्टर",
-        nav_ne: "पूर्वोत्तर विशेष",
-        nav_helplines: "हेल्पलाइन",
+        nav_home: "होम",
+        nav_navigator: "AI नेविगेटर",
+        nav_gap: "दस्तावेज़ गैप",
+        nav_benefits: "लाभ खोज",
+        nav_gps: "ब्यूरोक्रेसी GPS",
+        nav_ne: "पूर्वोत्तर",
+        nav_score: "नागरिक स्कोर",
+        nav_schemes: "योजनाएं",
         hero_badge: "राष्ट्रीय नागरिक अधिकार अवसंरचना",
         hero_title: 'जब नौकरशाही जटिल हो जाती है, <span class="highlight-green">हक़दार</span> मार्ग दिखाता है।',
         hero_subtitle: "लाखों भारतीय केवल इसलिए लाभ, मजदूरी, न्याय और अवसर खो देते हैं क्योंकि वे अगला कदम नहीं जानते हैं। हक़दार आपके अधिकारों की पहचान करने, कानूनी दस्तावेज़ तैयार करने और आपकी भाषा में हर शिकायत मार्ग पर आपका मार्गदर्शन करने के लिए AI का उपयोग करता है।",
@@ -2595,17 +2597,516 @@ document.addEventListener('DOMContentLoaded', () => {
                 const navLinks = document.querySelector('.nav-links');
                 if (navLinks) {
                     navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+                    const isOpen = navLinks.classList.toggle('mobile-open');
+                    mobileMenuBtn.setAttribute('aria-expanded', String(isOpen));
                 }
+            });
+
+            document.querySelectorAll('.nav-links .nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    const navLinks = document.querySelector('.nav-links');
+                    if (navLinks) {
+                        navLinks.classList.remove('mobile-open');
+                    }
+                    mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                });
             });
         }
     } catch (e) {
         console.error("Error in mobile menu toggle:", e);
     }
 
-    // Trigger AI status evaluation
+    // Wire up navigation links
+    try {
+        document.querySelectorAll('.nav-links .nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const pageId = link.getAttribute('data-page');
+                if (pageId) {
+                    switchPage(pageId);
+                }
+            });
+        });
+    } catch (e) {
+        console.error("Error setting up navigation click listeners:", e);
+    }
+
+    // Northeast Special state click buttons
+    try {
+        document.querySelectorAll('.ne-state-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.ne-state-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const state = btn.dataset.state;
+                if (state) {
+                    renderNortheastSchemes(state);
+                }
+            });
+        });
+    } catch (e) {
+        console.error("Error setting up Northeast state buttons:", e);
+    }
+
+    // Trigger AI status evaluation and initial SPA views setup
     try {
         updateAIStatusBadge();
+        // Setup initial default views
+        loadGPSPath("PM-KISAN Rejection");
+        renderNortheastSchemes("Assam");
+        
+        // Handle URL hash redirects on direct load
+        const hash = window.location.hash.replace('#', '');
+        const validPages = ['home', 'navigator', 'gap', 'benefits', 'gps', 'northeast', 'score', 'schemes'];
+        if (hash && validPages.includes(hash)) {
+            switchPage(hash);
+        } else {
+            switchPage('home');
+        }
     } catch (e) {
-        console.error("Error in updateAIStatusBadge:", e);
+        console.error("Error in app initialization:", e);
     }
 });
+
+// ============================================
+// Haqqdar 3.0 — Core SPA Page Navigation Router
+// ============================================
+
+function switchPage(pageId) {
+    // Update hash in URL
+    window.location.hash = pageId;
+
+    // Hide all view pages
+    document.querySelectorAll('.view-page').forEach(page => {
+        page.classList.remove('active');
+    });
+
+    // Show active page
+    const activePage = document.getElementById('view-' + pageId);
+    if (activePage) {
+        activePage.classList.add('active');
+        // Scroll window to top smoothly
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Toggle nav active state
+    document.querySelectorAll('.nav-links .nav-link').forEach(link => {
+        const pageAttr = link.getAttribute('data-page');
+        link.classList.toggle('active', pageAttr === pageId);
+    });
+
+    // Run page specific setups
+    if (pageId === 'schemes') {
+        filterSchemesDirectory();
+    } else if (pageId === 'northeast') {
+        const activeStateBtn = document.querySelector('.ne-state-btn.active');
+        if (activeStateBtn) {
+            renderNortheastSchemes(activeStateBtn.dataset.state);
+        }
+    }
+}
+
+// ============================================
+// Bureaucracy GPS Escalation Timelines Database
+// ============================================
+
+const BUREAUCRACY_PATHS = {
+    "PM-KISAN Rejection": [
+        { level: 1, title: "Check Rejection Reason", authority: "PM-KISAN Portal Helpdesk", contact: "pmkisan.gov.in (Status Desk)", docs: "Registered Mobile / Aadhaar", deadline: "Immediate", action: "Log in to the PM-Kisan portal, navigate to 'Know Your Status', and inspect the specific rejection code (e.g. land record mismatch, bank mismatch)." },
+        { level: 2, title: "Land Record mutation check", authority: "Tehsildar / Circle Office", contact: "Local Revenue Circle Officer", docs: "Jamabandi copy / Land Deed (Mutation Copy)", deadline: "7 Days", action: "Verify that your land holding record is updated and matches the name on your Aadhaar card. Correct discrepancies." },
+        { level: 3, title: "DBT Bank Account Linking", authority: "Your Bank Branch Desk", contact: "Bank Branch Manager / Staff", docs: "Aadhaar Card + Bank Passbook", deadline: "3 Days", action: "Submit Aadhaar seeding form and verify NPCI mapping. Ensure account is active for Direct Benefit Transfer." },
+        { level: 4, title: "Submit Online Grievance", authority: "PM-KISAN Central Helpdesk", contact: "155261 / 1800-115-526", docs: "Application ID / Details", deadline: "15 Days", action: "File online grievance ticket detailing document correction, or call the toll-free number to report record update." },
+        { level: 5, title: "DAO Escalation Desk", authority: "District Agriculture Officer (DAO)", contact: "DAO Section, District Collectorate", docs: "Application summary + Land holding proofs", deadline: "15 Days", action: "Submit a physical written appeal to the DAO desk regarding long verification delay." },
+        { level: 6, title: "Final BDO Resolution", authority: "Block Development Officer (BDO)", contact: "Local Block Panchayat Office", docs: "All verified proofs", deadline: "30 Days", action: "The BDO office handles the final resolution and reports back to the state portal." }
+    ],
+    "Scholarship Rejection": [
+        { level: 1, title: "Identify Rejection Reason", authority: "College Scholarship Nodal Cell", contact: "College Scholarship Coordinator", docs: "NSP Application ID", deadline: "Immediate", action: "Get the specific reason code from the College desk (e.g. Expired Income certificate, mark discrepancy)." },
+        { level: 2, title: "Document Correction Desk", authority: "Tehsildar / Competent Authority", docs: "Income Certificate / Caste Proof", contact: "District Revenue Portal", deadline: "7 Days", action: "Obtain updated certificate copies with valid digital signatures." },
+        { level: 3, title: "Re-submit on Portal", authority: "National Scholarship Portal", contact: "scholarships.gov.in", docs: "Corrected files + Application ID", deadline: "Before Deadline", action: "Re-upload the corrected documents on the portal and trigger verification." },
+        { level: 4, title: "District Welfare Officer appeal", authority: "District Welfare Officer (DWO)", contact: "DWO desk at Collectorate Office", docs: "Appeal Letter + College Bonafide", deadline: "30 Days", action: "File a formal written appeal requesting fund verification." },
+        { level: 5, title: "State Welfare Committee", authority: "State Scholarship Committee", contact: "Education Department Directorate", docs: "Complete Case record file", deadline: "60 Days", action: "Await review decision." }
+    ],
+    "PMAY Application": [
+        { level: 1, title: "Panchayat Eligibility Check", authority: "Gram Panchayat Secretary Office", contact: "Local Panchayat Office", docs: "Aadhaar Card", deadline: "Immediate", action: "Verify that your name is present in the SECC-2011 priority list or draft." },
+        { level: 2, title: "Submit Block Application", authority: "Block Development Office (BDO)", contact: "Block Housing Coordinator", docs: "Aadhaar + Bank details + Land Deed", deadline: "Open", action: "Submit the complete physical housing support form to the BDO office." },
+        { level: 3, title: "BDO Inspector Site Visit", authority: "Block Junior Engineer (JE)", contact: "BDO Construction Section", docs: "Land mutation proof / site details", deadline: "15 Days", action: "Facilitate site visit for geo-tagging and verify land suitability." },
+        { level: 4, title: "District Sanction list", authority: "District Magistrate / Collector", contact: "District Collectorate Housing Desk", docs: "BDO approved file", deadline: "30 Days", action: "Track the publication of sanctioned beneficiary list." },
+        { level: 5, title: "Sanction Release Track", authority: "District Housing Desk", contact: "Collectorate", docs: "Approved application", deadline: "30-60 Days", action: "Track DBT transfer." },
+        { level: 6, title: "Completion Certificate", authority: "Gram Panchayat", contact: "Panchayat office", docs: "Photos of construction", deadline: "90 Days", action: "Submit geo-tagged photos." }
+    ],
+    "Wages/Salary Unpaid": [
+        { level: 1, title: "Written Demand Notice", authority: "Employer / Contractor Office", contact: "Employer direct address", docs: "Attendance log / wage card", deadline: "Immediate", action: "Send a formal notice demanding wages due within 15 days." },
+        { level: 2, title: "ASHA / Labour Inspector contact", authority: "Local Labour Inspector Office", contact: "Labour Welfare Inspector Desk", docs: "Notice copy + Wage slip", deadline: "15 Days", action: "Submit a written complaint of wage denial to the Labour Inspector." },
+        { level: 3, title: "File Grievance on SAMADHAN", authority: "Ministry of Labour", contact: "samadhan.gov.in", docs: "Grievance details", deadline: "30 Days", action: "File official online complaint on the central Samadhan portal." },
+        { level: 4, title: "Labour Court appeal", authority: "Labour Court (Sec 33C)", contact: "Labour Court registrar Office", docs: "Complete case file", deadline: "60 Days", action: "File application for recovery of money due under Section 33C." }
+    ],
+    "Ration/PDS Denied": [
+        { level: 1, title: "PDS Helpline Call", authority: "National Food Security Desk", contact: "Dial 1967", docs: "Ration Card number", deadline: "Immediate", action: "Call the national helpline and report the Fair Price Shop dealer." },
+        { level: 2, title: "Written Complaint to DSO", authority: "District Supply Officer (DSO)", contact: "District Supply Office / DC Office", docs: "Ration card copy", deadline: "7 Days", action: "Submit written complaint against dealer for denying foodgrains." },
+        { level: 3, title: "Complaint to DGRO", authority: "District Grievance Officer (DGRO)", contact: "DGRO desk, DC Collectorate", docs: "Ration card + copy of DSO complaint", deadline: "15 Days", action: "File formal grievance to DGRO under Section 15 of NFSA." },
+        { level: 4, title: "State Food Commission", authority: "State Food Commission", contact: "Directorate of Food & Civil Supplies", docs: "Complete case history", deadline: "30 Days", action: "Escalate the grievance under Section 16 of the NFSA." }
+    ],
+    "Northeast Special": [
+        { level: 1, title: "Circle Office representation", authority: "Circle Officer (CO)", contact: "Local Revenue Circle Office", docs: "Land document / Mutation slip", deadline: "Immediate", action: "Verify status of pending land mutation / border land representation." },
+        { level: 2, title: "Deputy Commissioner Appeal", authority: "Deputy Commissioner (DC) Office", contact: "DC Collectorate Revenue Branch", docs: "PRC / Land records", deadline: "30 Days", action: "Submit representation to DC office for pending mutation." },
+        { level: 3, title: "Autonomous District Council", authority: "Autonomous District Council (ADC) Court", contact: "ADC Office / Court Registry", docs: "Tribal customary rights docs", deadline: "60 Days", action: "Submit customary land dispute representation to ADC court." },
+        { level: 4, title: "High Court Writ Petition", authority: "Gauhati High Court (Art. 226)", contact: "High Court Registry Desk", docs: "Complete record files", deadline: "90 Days", action: "File writ petition under Article 226 for administrative delay." }
+    ]
+};
+
+let activeGPSPath = "PM-KISAN Rejection";
+let activeGPSStepIdx = 0;
+
+function loadGPSPath(pathName) {
+    activeGPSPath = pathName;
+    const steps = BUREAUCRACY_PATHS[pathName];
+    if (!steps) return;
+
+    activeGPSStepIdx = 0;
+    renderGPSTimeline(steps);
+    showGPSStepDetails(steps[0], 0);
+}
+
+function renderGPSTimeline(steps) {
+    const container = document.getElementById('gps-timeline-nodes-container');
+    if (!container) return;
+
+    container.innerHTML = '';
+    steps.forEach((step, idx) => {
+        const isCompleted = idx < activeGPSStepIdx;
+        const isActive = idx === activeGPSStepIdx;
+        
+        let nodeClass = 'gps-timeline-node';
+        if (isCompleted) nodeClass += ' completed';
+        if (isActive) nodeClass += ' active';
+
+        const nodeHTML = `
+            <div class="${nodeClass}" onclick="selectGPSStep(${idx})">
+                <div class="gps-node-marker">${idx + 1}</div>
+                <div class="gps-node-content">
+                    <h5>${step.title}</h5>
+                    <div class="gps-node-meta">
+                        <span>Level ${step.level}</span>
+                        <span class="gps-days">⏱️ ${step.deadline}</span>
+                    </div>
+                </div>
+            </div>
+        `;
+        container.insertAdjacentHTML('beforeend', nodeHTML);
+    });
+}
+
+function selectGPSStep(idx) {
+    activeGPSStepIdx = idx;
+    const steps = BUREAUCRACY_PATHS[activeGPSPath];
+    if (!steps) return;
+
+    // Update timeline active states
+    const nodes = document.querySelectorAll('.gps-timeline-node');
+    nodes.forEach((node, i) => {
+        node.className = 'gps-timeline-node';
+        if (i < idx) node.className += ' completed';
+        if (i === idx) node.className += ' active';
+    });
+
+    showGPSStepDetails(steps[idx], idx);
+}
+
+function showGPSStepDetails(step, idx) {
+    const badge = document.getElementById('gps-detail-badge');
+    const title = document.getElementById('gps-detail-title');
+    const subtitle = document.getElementById('gps-detail-subtitle');
+    const authority = document.getElementById('gps-detail-authority');
+    const contact = document.getElementById('gps-detail-contact');
+    const deadline = document.getElementById('gps-detail-deadline');
+    const docs = document.getElementById('gps-detail-docs');
+    const action = document.getElementById('gps-detail-action');
+    const actionBtn = document.getElementById('gps-action-btn');
+
+    if (badge) badge.textContent = `Level ${step.level}`;
+    if (title) title.textContent = step.title;
+    if (subtitle) subtitle.textContent = `Escalation step details for ${activeGPSPath}`;
+    if (authority) authority.textContent = step.authority;
+    if (contact) contact.textContent = step.contact;
+    if (deadline) deadline.textContent = step.deadline;
+    if (docs) docs.textContent = step.docs;
+    if (action) action.textContent = step.action;
+
+    if (actionBtn) {
+        // Clear previous event listener
+        const newBtn = actionBtn.cloneNode(true);
+        actionBtn.parentNode.replaceChild(newBtn, actionBtn);
+        newBtn.addEventListener('click', () => {
+            const isHindi = currentLang === 'hi';
+            const chatInput = document.getElementById('chat-input');
+            let query = `I am at Step ${idx+1} of my ${activeGPSPath} process: "${step.title}". The authority is ${step.authority}. How do I complete the action: "${step.action}"? Help me write an escalation letter.`;
+            if (isHindi) {
+                query = `मैं अपने ${activeGPSPath} प्रक्रिया के चरण ${idx+1} पर हूँ: "${step.title}"। अधिकारी ${step.authority} हैं। मैं इस कार्रवाई को कैसे पूरा करूँ: "${step.action}"? मुझे शिकायत पत्र का प्रारूप लिखने में मदद करें।`;
+            }
+            if (chatInput) {
+                chatInput.value = query;
+                autoResize(chatInput);
+                switchPage('navigator');
+                setTimeout(() => {
+                    handleSend();
+                }, 800);
+            }
+        });
+    }
+}
+
+// ============================================
+// Benefits Discovery Engine Matchmaker
+// ============================================
+
+function findBenefits() {
+    const ageVal = parseInt(document.getElementById('profile-age').value);
+    const stateVal = document.getElementById('profile-state').value;
+    const genderVal = document.getElementById('profile-gender').value;
+    const occupationVal = document.getElementById('profile-occupation').value;
+    const incomeVal = parseInt(document.getElementById('profile-income').value);
+    const categoryVal = document.getElementById('profile-category').value;
+
+    const grid = document.getElementById('benefits-results-grid');
+    const header = document.getElementById('benefits-results-header');
+    if (!grid) return;
+
+    grid.innerHTML = '';
+    const isHindi = currentLang === 'hi';
+
+    // Matching logic
+    const matchedKeys = Object.keys(LEGAL_DATA).filter(key => {
+        const data = LEGAL_DATA[key];
+        
+        // State Match
+        if (stateVal && stateVal !== "All India") {
+            const isAssamScheme = key === 'orunodoi' || key === 'lakhpati' || key === 'svayem';
+            const isMeghalayaScheme = key === 'cmsm';
+            const isArunachalScheme = key === 'cmaay';
+            const isNortheastScheme = key === 'ne_merit' || key === 'ishan_uday' || isAssamScheme || isMeghalayaScheme || isArunachalScheme || key === 'manipur_scholarship' || key === 'nagaland_scholarship' || key === 'mizoram_scholarship';
+
+            if (isAssamScheme && stateVal !== "Assam") return false;
+            if (isMeghalayaScheme && stateVal !== "Meghalaya") return false;
+            if (isArunachalScheme && stateVal !== "Arunachal") return false;
+            if (isNortheastScheme && !["Assam", "Meghalaya", "Nagaland", "Manipur", "Mizoram", "Arunachal", "Tripura", "Sikkim"].includes(stateVal)) return false;
+        }
+
+        // Occupation / Student Match
+        if (occupationVal === 'Student') {
+            const isEducation = key === 'pre_matric' || key === 'post_matric' || key === 'emrs' || key === 'ne_merit' || key === 'ishan_uday' || key === 'cmsm' || key === 'manipur_scholarship' || key === 'nagaland_scholarship' || key === 'mizoram_scholarship';
+            if (!isEducation) return false;
+        }
+
+        // Occupation / Farmer Match
+        if (occupationVal === 'Farmer') {
+            const isAgriculture = key === 'pm_kisan' || key === 'pmfby' || key === 'svamitva';
+            if (!isAgriculture) return false;
+        }
+
+        // Gender / Woman Match
+        if (genderVal === 'Female') {
+            const isWomanScheme = key === 'pmmvy' || key === 'orunodoi' || key === 'lakhpati';
+            if (isWomanScheme) return true;
+        }
+
+        // Senior Match
+        if (ageVal && ageVal >= 60) {
+            const isSeniorScheme = key === 'apy' || key === 'pmjay';
+            if (isSeniorScheme) return true;
+        }
+
+        // Income Limit Match
+        if (incomeVal && incomeVal <= 150000) {
+            const isBplScheme = key === 'pmay_g' || key === 'pmay_u' || key === 'nfsa' || key === 'ujjwala' || key === 'mgnregs';
+            if (isBplScheme) return true;
+        }
+
+        // Category SC/ST match
+        if ((categoryVal === 'SC' || categoryVal === 'ST') && (key === 'emrs' || key === 'pre_matric' || key === 'post_matric')) {
+            return true;
+        }
+
+        return true;
+    });
+
+    if (matchedKeys.length === 0) {
+        header.innerHTML = `<h4 style="font-size: 15px; color: var(--accent-warm);">❌ No direct schemes found for this query.</h4>`;
+        grid.innerHTML = `
+            <div class="no-cases-card" style="grid-column: 1/-1; padding: 40px; text-align: center;">
+                <div class="no-cases-icon" style="font-size: 40px; margin-bottom: 15px;">🔍</div>
+                <h4>Try loosening your criteria</h4>
+                <p>Change the state or occupation criteria to find matches in other sectors.</p>
+            </div>
+        `;
+        return;
+    }
+
+    header.innerHTML = `<h4 style="font-size: 15px; color: var(--green);">✓ Found ${matchedKeys.length} matching welfare programs for your profile</h4>`;
+
+    matchedKeys.forEach(key => {
+        const data = LEGAL_DATA[key];
+        const title = isHindi ? (data.title_hi || data.title) : data.title;
+        const benefits = isHindi ? (data.rights_hi ? data.rights_hi[0] : data.rights[0]) : data.rights[0];
+        
+        let docsList = '';
+        data.document_checklist.forEach(doc => {
+            docsList += `<span class="tag" style="background:rgba(255,255,255,0.05); color:var(--text-secondary); margin-right:4px; font-size:10px;">${doc.name}</span>`;
+        });
+
+        const cardHTML = `
+            <div class="card fade-in">
+                <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                    <span class="tag" style="background:rgba(255, 110, 20, 0.15); color:var(--saffron); border:1px solid var(--border-accent);">${key.toUpperCase()}</span>
+                </div>
+                <h5 style="font-size:0.95rem; font-weight:700; margin-bottom:5px;">${title}</h5>
+                <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:12px;">${data.law}</p>
+                <div style="font-size:0.85rem; color:var(--green); font-weight:600; margin-bottom:12px;">Benefit: ${benefits}</div>
+                <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:8px; text-transform:uppercase;">Key Documents:</div>
+                <div style="margin-bottom:15px; display:flex; flex-wrap:wrap; gap:4px;">${docsList}</div>
+                <div class="rec-scheme-actions">
+                    <button class="btn-link" onclick="switchPage('gap'); document.getElementById('custom-profile-input').value = '${title}'; runCustomProfileMatch();" style="flex:1;">Check Gap</button>
+                    <button class="btn-ai-consult" onclick="consultSchemeInChat('${title}')" style="flex:1;">AI Consult</button>
+                </div>
+            </div>
+        `;
+        grid.insertAdjacentHTML('beforeend', cardHTML);
+    });
+}
+
+// ============================================
+// Northeast Special State Scheme Filter
+// ============================================
+
+let activeNeState = "Assam";
+
+function renderNortheastSchemes(stateName) {
+    activeNeState = stateName;
+    const title = document.getElementById('ne-state-schemes-title');
+    const grid = document.getElementById('ne-state-schemes-grid');
+    if (!title || !grid) return;
+
+    const isHindi = currentLang === 'hi';
+    title.textContent = isHindi ? `${stateName} में कल्याणकारी योजनाएं` : `Welfare Schemes in ${stateName}`;
+    grid.innerHTML = '';
+
+    const stateSchemes = {
+        Assam: ['orunodoi', 'lakhpati', 'svayem', 'ne_merit', 'ishan_uday'],
+        Meghalaya: ['cmsm', 'ne_merit', 'ishan_uday'],
+        Nagaland: ['nagaland_scholarship', 'ne_merit', 'ishan_uday'],
+        Manipur: ['manipur_scholarship', 'ne_merit', 'ishan_uday'],
+        Mizoram: ['mizoram_scholarship', 'ne_merit', 'ishan_uday'],
+        Arunachal: ['cmaay', 'ne_merit', 'ishan_uday'],
+        Tripura: ['ne_merit', 'ishan_uday'],
+        Sikkim: ['ne_merit', 'ishan_uday']
+    };
+
+    const list = stateSchemes[stateName] || ['ne_merit', 'ishan_uday'];
+
+    list.forEach(key => {
+        const data = LEGAL_DATA[key];
+        if (!data) return;
+
+        const schemeTitle = isHindi ? (data.title_hi || data.title) : data.title;
+        const benefits = isHindi ? (data.rights_hi ? data.rights_hi[0] : data.rights[0]) : data.rights[0];
+
+        const cardHTML = `
+            <div class="card fade-in">
+                <span class="tag" style="background:rgba(255, 110, 20, 0.1); color:var(--saffron); margin-bottom:10px;">${stateName.toUpperCase()}</span>
+                <h5 style="font-size:0.95rem; font-weight:700; margin-bottom:5px; margin-top:5px;">${schemeTitle}</h5>
+                <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:12px;">${data.law}</p>
+                <div style="font-size:0.85rem; color:var(--green); font-weight:600; margin-bottom:12px;">Benefit: ${benefits}</div>
+                <div class="rec-scheme-actions">
+                    <button class="btn-link" onclick="switchPage('gap'); document.getElementById('custom-profile-input').value = '${schemeTitle}'; runCustomProfileMatch();">Check Gap</button>
+                    <button class="btn-ai-consult" onclick="consultSchemeInChat('${schemeTitle}')">AI Consult</button>
+                </div>
+            </div>
+        `;
+        grid.insertAdjacentHTML('beforeend', cardHTML);
+    });
+}
+
+// ============================================
+// Schemes Directory Filter and Search Engine
+// ============================================
+
+function filterSchemesDirectory() {
+    const searchVal = document.getElementById('schemes-search-input').value.toLowerCase().trim();
+    const catVal = document.getElementById('schemes-category-filter').value;
+    const grid = document.getElementById('schemes-directory-grid');
+    if (!grid) return;
+
+    grid.innerHTML = '';
+    const isHindi = currentLang === 'hi';
+
+    const keys = Object.keys(LEGAL_DATA).filter(key => {
+        const data = LEGAL_DATA[key];
+        const title = isHindi ? (data.title_hi || data.title) : data.title;
+        
+        // Search filter
+        const matchSearch = title.toLowerCase().includes(searchVal) || data.law.toLowerCase().includes(searchVal) || key.toLowerCase().includes(searchVal);
+        
+        // Category mapping rule
+        let matchCategory = true;
+        if (catVal !== 'All') {
+            const isHousing = key === 'pmay_g' || key === 'pmay_u';
+            const isEmployment = key === 'mgnregs';
+            const isAgriculture = key === 'pm_kisan' || key === 'pmfby' || key === 'svamitva';
+            const isHealth = key === 'pmjay' || key === 'pmmvy' || key === 'cmaay';
+            const isBusiness = key === 'pm_mudra' || key === 'vishwakarma';
+            const isEducation = key === 'pre_matric' || key === 'post_matric' || key === 'emrs' || key === 'ne_merit' || key === 'ishan_uday' || key === 'cmsm' || key === 'manipur_scholarship' || key === 'nagaland_scholarship' || key === 'mizoram_scholarship';
+            const isEnergy = key === 'ujjwala' || key === 'surya_ghar';
+            const isWelfare = key === 'jan_dhan' || key === 'pmjjby' || key === 'pmsby' || key === 'apy' || key === 'orunodoi' || key === 'lakhpati' || key === 'svayem';
+
+            if (catVal === 'Housing' && !isHousing) matchCategory = false;
+            if (catVal === 'Employment' && !isEmployment) matchCategory = false;
+            if (catVal === 'Agriculture' && !isAgriculture) matchCategory = false;
+            if (catVal === 'Health' && !isHealth) matchCategory = false;
+            if (catVal === 'Business' && !isBusiness) matchCategory = false;
+            if (catVal === 'Education' && !isEducation) matchCategory = false;
+            if (catVal === 'Energy' && !isEnergy) matchCategory = false;
+            if (catVal === 'Welfare' && !isWelfare) matchCategory = false;
+        }
+
+        return matchSearch && matchCategory;
+    });
+
+    if (keys.length === 0) {
+        grid.innerHTML = `
+            <div class="no-cases-card" style="grid-column: 1/-1; padding: 40px; text-align: center;">
+                <div class="no-cases-icon" style="font-size: 40px; margin-bottom: 15px;">📁</div>
+                <h4>No Schemes Found</h4>
+                <p>Try searching for a different keyword or category.</p>
+            </div>
+        `;
+        return;
+    }
+
+    keys.forEach(key => {
+        const data = LEGAL_DATA[key];
+        const title = isHindi ? (data.title_hi || data.title) : data.title;
+        const benefits = isHindi ? (data.rights_hi ? data.rights_hi[0] : data.rights[0]) : data.rights[0];
+        
+        let docsList = '';
+        data.document_checklist.forEach(doc => {
+            docsList += `<span class="tag" style="background:rgba(255,255,255,0.05); color:var(--text-secondary); margin-right:4px; font-size:10px;">${doc.name}</span>`;
+        });
+
+        const cardHTML = `
+            <div class="card fade-in">
+                <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                    <span class="tag" style="background:rgba(255, 110, 20, 0.15); color:var(--saffron); border:1px solid var(--border-accent);">${key.toUpperCase()}</span>
+                </div>
+                <h5 style="font-size:0.95rem; font-weight:700; margin-bottom:5px;">${title}</h5>
+                <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:12px;">${data.law}</p>
+                <div style="font-size:0.85rem; color:var(--green); font-weight:600; margin-bottom:12px;">Benefit: ${benefits}</div>
+                <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:8px; text-transform:uppercase;">Required Papers:</div>
+                <div style="margin-bottom:15px; display:flex; flex-wrap:wrap; gap:4px;">${docsList}</div>
+                <div class="rec-scheme-actions">
+                    <button class="btn-link" onclick="switchPage('gap'); document.getElementById('custom-profile-input').value = '${title}'; runCustomProfileMatch();">Check Gap</button>
+                    <button class="btn-ai-consult" onclick="consultSchemeInChat('${title}')">AI Consult</button>
+                </div>
+            </div>
+        `;
+        grid.insertAdjacentHTML('beforeend', cardHTML);
+    });
+}
+

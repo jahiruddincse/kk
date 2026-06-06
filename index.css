@@ -3203,3 +3203,455 @@ button {
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(255, 110, 20, 0.25);
 }
+
+/* ============================================
+   Haqqdar 3.0 — SPA Dashboard Styling
+   ============================================ */
+
+/* App Main Top Padding */
+.app-main {
+    padding-top: 20px;
+}
+
+/* Page Views and Transition */
+.view-page {
+    display: none;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.view-page.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+    animation: pageFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes pageFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* App Page Containers */
+.app-page-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px 24px 80px;
+}
+
+/* Side Layouts (AI Navigator & Benefits) */
+.page-side-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 30px;
+    align-items: start;
+}
+
+/* AI Navigator Sidebar */
+.chat-sidebar-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.sidebar-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 20px;
+}
+
+.sidebar-card h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 10px;
+}
+
+.sidebar-lang-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.sidebar-action-item {
+    padding: 10px 12px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    margin-bottom: 8px;
+    transition: all var(--transition-fast);
+}
+
+.sidebar-action-item:hover {
+    background: var(--accent-glow);
+    border-color: var(--border-accent);
+    color: var(--accent-light);
+    transform: translateX(4px);
+}
+
+/* Clickable Platform Engines cards */
+.clickable-showcase-card {
+    cursor: pointer;
+    transition: all var(--transition-normal);
+}
+
+.clickable-showcase-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--border-accent);
+    box-shadow: 0 8px 30px rgba(255, 110, 20, 0.08);
+}
+
+/* Form Design (Benefits Discovery) */
+.form-container-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 4px;
+}
+
+.form-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-item label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    letter-spacing: 0.5px;
+}
+
+.form-item input[type="number"],
+.form-item select {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 0.88rem;
+    font-family: inherit;
+    outline: none;
+    transition: border-color var(--transition-fast);
+}
+
+.form-item input[type="number"]:focus,
+.form-item select:focus {
+    border-color: var(--accent-warm);
+}
+
+/* Results panel styles */
+.results-container-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Bureaucracy GPS Layout */
+.gps-layout {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 24px;
+    align-items: start;
+}
+
+.gps-timeline-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.gps-selector-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 20px;
+}
+
+.gps-selector-card select {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    padding: 12px;
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    outline: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* GPS Journey Step Nodes */
+.gps-journey-nodes {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+}
+
+.gps-timeline-node {
+    display: flex;
+    position: relative;
+    padding-left: 45px;
+    padding-bottom: 28px;
+    cursor: pointer;
+}
+
+.gps-timeline-node:last-child {
+    padding-bottom: 0;
+}
+
+.gps-timeline-node::before {
+    content: '';
+    position: absolute;
+    left: 17px;
+    top: 30px;
+    bottom: -15px;
+    width: 2px;
+    background: var(--border);
+}
+
+.gps-timeline-node:last-child::before {
+    display: none;
+}
+
+.gps-node-marker {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-normal);
+}
+
+.gps-timeline-node.active .gps-node-marker {
+    background: linear-gradient(135deg, var(--saffron) 0%, var(--accent-warm) 100%);
+    border-color: var(--accent-warm);
+    color: #fff;
+    box-shadow: 0 0 12px var(--accent-glow-strong);
+}
+
+.gps-timeline-node.completed .gps-node-marker {
+    background: var(--accent2);
+    border-color: var(--accent2-light);
+    color: #fff;
+}
+
+.gps-node-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.gps-node-content h5 {
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    transition: color var(--transition-fast);
+}
+
+.gps-timeline-node.active .gps-node-content h5 {
+    color: var(--accent-light);
+}
+
+.gps-node-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.76rem;
+    color: var(--text-muted);
+}
+
+.gps-node-meta .gps-days {
+    color: var(--saffron);
+    font-weight: 600;
+}
+
+/* GPS Detail Column stickiness */
+.gps-detail-column {
+    position: sticky;
+    top: 85px;
+}
+
+.gps-detail-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.gps-detail-info-block {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.gps-detail-info-block .info-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.85rem;
+}
+
+.gps-detail-info-block .info-row strong {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.gps-detail-info-block .info-row span {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.gps-detail-instruction {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    margin-bottom: 24px;
+}
+
+.gps-detail-instruction h5 {
+    font-size: 0.8rem;
+    color: var(--accent-light);
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
+.gps-detail-instruction p {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: var(--text-secondary);
+}
+
+/* Northeast Hub state view list */
+.northeast-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 30px;
+    align-items: start;
+}
+
+.ne-sidebar {
+    display: flex;
+    flex-direction: column;
+}
+
+.ne-state-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.ne-state-btn {
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all var(--transition-fast);
+}
+
+.ne-state-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+}
+
+.ne-state-btn.active {
+    background: linear-gradient(135deg, var(--saffron) 0%, var(--accent-warm) 100%);
+    border-color: var(--accent-warm);
+    color: #fff;
+}
+
+/* Schemes directory search & filters */
+.schemes-search-bar input[type="text"],
+.schemes-search-bar select {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    padding: 14px 20px;
+    border-radius: var(--radius-md);
+    outline: none;
+    font-family: inherit;
+    font-size: 0.92rem;
+    transition: all var(--transition-fast);
+}
+
+.schemes-search-bar input[type="text"]:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+.schemes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* Responsive Overrides for SPA layout */
+@media (max-width: 992px) {
+    .page-side-layout {
+        grid-template-columns: 1fr;
+    }
+    .gps-layout {
+        grid-template-columns: 1fr;
+    }
+    .northeast-layout {
+        grid-template-columns: 1fr;
+    }
+    .ne-sidebar {
+        margin-bottom: 20px;
+    }
+    .ne-state-list {
+        flex-direction: row;
+        overflow-x: auto;
+        padding-bottom: 8px;
+    }
+    .ne-state-btn {
+        flex-shrink: 0;
+        white-space: nowrap;
+    }
+}
+

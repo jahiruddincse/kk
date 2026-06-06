@@ -21,19 +21,20 @@
     <!-- Navigation Bar -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
-            <a href="#" class="nav-logo">
+            <a href="#" class="nav-logo" onclick="switchPage('home'); return false;">
                 <span class="logo-icon">⚖️</span>
                 <span class="logo-text">Haqqdar <span class="logo-hindi">हक़दार</span></span>
             </a>
             
             <div class="nav-links">
-                <a href="#how-it-works" class="nav-link" data-i18n="nav_process">Process</a>
-                <a href="#life-navigator" class="nav-link" data-i18n="nav_life_navigator">Life Navigator</a>
-                <a href="#chat" class="nav-link" data-i18n="nav_chat">AI Navigator</a>
-                <a href="#case-tracker" class="nav-link" data-i18n="nav_tracker">My Cases</a>
-                <a href="#gap-detector" class="nav-link" data-i18n="nav_gap">Gap Detector</a>
-                <a href="#northeast" class="nav-link" data-i18n="nav_ne">Northeast Special</a>
-                <a href="#helplines" class="nav-link" data-i18n="nav_helplines">Helplines</a>
+                <a href="#home" class="nav-link active" data-page="home" data-i18n="nav_home">Home</a>
+                <a href="#navigator" class="nav-link" data-page="navigator" data-i18n="nav_navigator">AI Navigator</a>
+                <a href="#gap" class="nav-link" data-page="gap" data-i18n="nav_gap">Doc Gap</a>
+                <a href="#benefits" class="nav-link" data-page="benefits" data-i18n="nav_benefits">Benefits</a>
+                <a href="#gps" class="nav-link" data-page="gps" data-i18n="nav_gps">GPS</a>
+                <a href="#northeast" class="nav-link" data-page="northeast" data-i18n="nav_ne">Northeast</a>
+                <a href="#score" class="nav-link" data-page="score" data-i18n="nav_score">Score</a>
+                <a href="#schemes" class="nav-link" data-page="schemes" data-i18n="nav_schemes">Schemes</a>
             </div>
 
             <div class="nav-actions">
@@ -62,642 +63,942 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero" id="hero">
-        <div class="hero-layout">
-            <div class="hero-content">
-                <div class="hero-badge">
-                    <span class="badge-dot"></span>
-                    <span data-i18n="hero_badge">National Citizen-Rights Infrastructure</span>
-                </div>
-                <h1 class="hero-title" data-i18n="hero_title">
-                    When bureaucracy gets complicated, <span class="highlight-green">Haqqdar</span> shows the way.
-                </h1>
-                <p class="hero-subtitle" data-i18n="hero_subtitle">
-                    Millions of Indians lose benefits, wages, justice, and opportunities simply because they do not know the next step. Haqqdar uses AI to identify your rights, generate legal documents, and guide you through every escalation path — in your language.
-                </p>
-                
-                <div class="hero-cta">
-                    <a href="#life-navigator" class="btn btn-primary" id="start-btn">
-                        <span data-i18n="hero_cta">Find What's Relevant</span>
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                    </a>
-                    <a href="#how-it-works" class="btn btn-ghost">
-                        <span data-i18n="hero_cta2">See How It Works</span>
-                    </a>
-                </div>
+    <!-- Main Views Container -->
+    <main class="app-main">
 
-                <div class="trust-indicators">
-                    <div class="indicator-item">✓ English & Hindi</div>
-                    <div class="indicator-item">✓ Northeast Specialization</div>
-                    <div class="indicator-item">✓ Govt Schemes Discovery</div>
-                    <div class="indicator-item">✓ Legal Escalation Paths</div>
-                    <div class="indicator-item">✓ Voice-First Access</div>
-                </div>
-            </div>
-
-            <div class="hero-visual">
-                <div class="hero-image-wrapper">
-                    <img src="hero_citizens_bg.png" alt="Hopeful and Empowered Indian Citizens" class="hero-main-img">
-                    <div class="image-overlay-card card-1">
-                        <span class="card-icon">⚡</span>
-                        <div>
-                            <h4>Real-time Protection</h4>
-                            <p>Rights grounded in Constitution of India</p>
+        <!-- ============================================ -->
+        <!-- VIEW 1: HOME (Dashboard Landing) -->
+        <!-- ============================================ -->
+        <section class="view-page active" id="view-home">
+            <!-- Hero Section -->
+            <div class="hero">
+                <div class="hero-layout">
+                    <div class="hero-content">
+                        <div class="hero-badge">
+                            <span class="badge-dot"></span>
+                            <span data-i18n="hero_badge">National Citizen-Rights Infrastructure</span>
                         </div>
-                    </div>
-                    <div class="image-overlay-card card-2">
-                        <span class="card-icon">🏢</span>
-                        <div>
-                            <h4>Escalation Engine</h4>
-                            <p>Direct routes to relevant authorities</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Rotating Citizen Quotes Section -->
-    <section class="quotes-section">
-        <div class="section-container">
-            <div class="quote-slider-container">
-                <div class="quote-slide active" id="quote-1">
-                    <p class="quote-text">"Nobody told me I could appeal the rejection. I thought my dream of studying was over."</p>
-                    <div class="quote-author">
-                        <div class="author-avatar">🎓</div>
-                        <div>
-                            <h4 class="author-name">Anjali Das</h4>
-                            <p class="author-meta">Scholarship Applicant, West Bengal</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="quote-slide" id="quote-2">
-                    <p class="quote-text">"I thought the police refusing my complaint was the end. Haqqdar drafted the petition to the SP in minutes."</p>
-                    <div class="quote-author">
-                        <div class="author-avatar">👨🏽‍🌾</div>
-                        <div>
-                            <h4 class="author-name">Rupesh Gogoi</h4>
-                            <p class="author-meta">Citizen, Assam</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="quote-slide" id="quote-3">
-                    <p class="quote-text">"My wages were unpaid for months. I didn't know where to go. The labour inspector letter worked."</p>
-                    <div class="quote-author">
-                        <div class="author-avatar">🔨</div>
-                        <div>
-                            <h4 class="author-name">Madan Lal</h4>
-                            <p class="author-meta">Daily Wage Worker, Uttar Pradesh</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="quote-slide" id="quote-4">
-                    <p class="quote-text">"Our house was washed away in floods. The system said no, but Haqqdar showed us the exact escalation path."</p>
-                    <div class="quote-author">
-                        <div class="author-avatar">👵🏽</div>
-                        <div>
-                            <h4 class="author-name">Pema Lepcha</h4>
-                            <p class="author-meta">Citizen, Sikkim</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="slider-dots">
-                    <span class="slider-dot active" data-index="0"></span>
-                    <span class="slider-dot" data-index="1"></span>
-                    <span class="slider-dot" data-index="2"></span>
-                    <span class="slider-dot" data-index="3"></span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How It Works (Visual Journey) -->
-    <section class="how-it-works" id="how-it-works">
-        <div class="section-container">
-            <div class="section-header">
-                <span class="section-tag" data-i18n="hiw_tag">THE PROCESS</span>
-                <h2 class="section-title" data-i18n="hiw_title">From problem to legal document in <span class="gradient-text">60 seconds</span></h2>
-                <p class="section-desc" data-i18n="hiw_desc">We translate complex bureaucracy into a plain-language action plan in 6 easy steps.</p>
-            </div>
-            
-            <div class="journey-timeline">
-                <div class="journey-step">
-                    <div class="journey-step-marker">1</div>
-                    <div class="journey-step-card">
-                        <div class="journey-icon">🗣️</div>
-                        <h3 data-i18n="step1_title">Describe Problem</h3>
-                        <p data-i18n="step1_desc">Speak or type in your native tongue about what went wrong.</p>
-                    </div>
-                </div>
-                <div class="journey-step">
-                    <div class="journey-step-marker">2</div>
-                    <div class="journey-step-card">
-                        <div class="journey-icon">🧠</div>
-                        <h3 data-i18n="step2_title">AI Analyzes Rights</h3>
-                        <p data-i18n="step2_desc">Our engine maps your issue to the Constitution & active laws.</p>
-                    </div>
-                </div>
-                <div class="journey-step">
-                    <div class="journey-step-marker">3</div>
-                    <div class="journey-step-card">
-                        <div class="journey-icon">📄</div>
-                        <h3 data-i18n="step3_title">Document Drafted</h3>
-                        <p data-i18n="step3_desc">Receive a customized, legal written complaint or RTI template.</p>
-                    </div>
-                </div>
-                <div class="journey-step">
-                    <div class="journey-step-marker">4</div>
-                    <div class="journey-step-card">
-                        <div class="journey-icon">🧗🏽</div>
-                        <h3 data-i18n="step4_title">Escalation Path</h3>
-                        <p data-i18n="step4_desc">Know exactly whom to contact if your initial plea is ignored.</p>
-                    </div>
-                </div>
-                <div class="journey-step">
-                    <div class="journey-step-marker">5</div>
-                    <div class="journey-step-card">
-                        <div class="journey-icon">📅</div>
-                        <h3 data-i18n="step5_title">Deadline Tracking</h3>
-                        <p data-i18n="step5_desc">Track response windows and calendar milestones automatically.</p>
-                    </div>
-                </div>
-                <div class="journey-step">
-                    <div class="journey-step-marker">6</div>
-                    <div class="journey-step-card">
-                        <div class="journey-icon">🏁</div>
-                        <h3 data-i18n="step6_title">Resolution Guidance</h3>
-                        <p data-i18n="step6_desc">Follow-through templates until your case reaches a verdict.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Citizen Life Navigator Section -->
-    <section class="life-navigator-section" id="life-navigator">
-        <div class="section-container">
-            <div class="section-header">
-                <span class="section-tag" data-i18n="life_nav_tag">ONBOARDING & ROADMAP</span>
-                <h2 class="section-title" data-i18n="life_nav_title">Let's Find What's Relevant For You</h2>
-                <p class="section-desc" data-i18n="life_nav_desc">Most Indians don't know which documents, schemes, benefits, and rights apply to them. Answer a few questions and Haqqdar will create your personalized roadmap.</p>
-            </div>
-
-            <div class="life-nav-layout">
-                <div class="life-nav-steps-grid">
-                    <!-- STEP 1: IDENTITY SELECTION -->
-                    <div class="life-nav-card" id="step1-card">
-                        <h3 class="step-title" data-i18n="life_nav_step1_title">Step 1: Who are you?</h3>
-                        <p class="step-desc" data-i18n="life_nav_step1_desc">Select the category that best describes your profile:</p>
-                        <div class="identity-grid">
-                            <button class="identity-card" data-identity="student">
-                                <span class="identity-emoji">👦</span>
-                                <span class="identity-name" data-i18n="id_student">Student (13–17)</span>
-                            </button>
-                            <button class="identity-card" data-identity="young_adult">
-                                <span class="identity-emoji">🧑</span>
-                                <span class="identity-name" data-i18n="id_young_adult">Young Adult (18–25)</span>
-                            </button>
-                            <button class="identity-card" data-identity="job_seeker">
-                                <span class="identity-emoji">👨</span>
-                                <span class="identity-name" data-i18n="id_job_seeker">Job Seeker</span>
-                            </button>
-                            <button class="identity-card" data-identity="woman">
-                                <span class="identity-emoji">👩</span>
-                                <span class="identity-name" data-i18n="id_woman">Woman</span>
-                            </button>
-                            <button class="identity-card" data-identity="farmer">
-                                <span class="identity-emoji">👨‍🌾</span>
-                                <span class="identity-name" data-i18n="id_farmer">Farmer</span>
-                            </button>
-                            <button class="identity-card" data-identity="tea_worker">
-                                <span class="identity-emoji">☕</span>
-                                <span class="identity-name" data-i18n="id_tea_worker">Tea Garden Worker</span>
-                            </button>
-                            <button class="identity-card" data-identity="senior">
-                                <span class="identity-emoji">🧓</span>
-                                <span class="identity-name" data-i18n="id_senior">Senior Citizen</span>
-                            </button>
-                            <button class="identity-card" data-identity="disability">
-                                <span class="identity-emoji">♿</span>
-                                <span class="identity-name" data-i18n="id_disability">Person with Disability</span>
-                            </button>
-                            <button class="identity-card" data-identity="northeast">
-                                <span class="identity-emoji">🏔️</span>
-                                <span class="identity-name" data-i18n="id_northeast">Northeast Resident</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- STEP 2: AGE TOGGLE -->
-                    <div class="life-nav-card" id="step2-card">
-                        <h3 class="step-title" data-i18n="life_nav_step2_title">Step 2: Are you 18 years or older?</h3>
-                        <p class="step-desc" data-i18n="life_nav_step2_desc">This determines eligibility for major voting rights, PAN, and adult documentation.</p>
-                        <div class="age-toggle-group">
-                            <button class="age-btn" id="age-yes-btn">YES</button>
-                            <button class="age-btn" id="age-no-btn">NO</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PERSONALIZED ROADMAP OUTPUT (Initial Hidden, shown on selection) -->
-                <div class="roadmap-result" id="roadmap-result" style="display: none;">
-                    <div class="roadmap-header">
-                        <div class="roadmap-header-info">
-                            <h3 data-i18n="roadmap_heading">🎯 Your Citizen Roadmap</h3>
-                            <p data-i18n="roadmap_subheading">Customized legal checklist and recommended schemes based on your profile.</p>
-                        </div>
-                        <div class="roadmap-score-box">
-                            <div class="radial-progress-container">
-                                <svg class="radial-progress" width="80" height="80" viewBox="0 0 80 80">
-                                    <circle class="radial-bg" cx="40" cy="40" r="34" />
-                                    <circle class="radial-fill" id="readiness-radial" cx="40" cy="40" r="34" stroke-dasharray="213.6" stroke-dashoffset="213.6" />
-                                </svg>
-                                <div class="radial-text" id="readiness-percentage">0%</div>
-                            </div>
-                            <div class="score-label" data-i18n="score_label">Citizen Readiness</div>
-                        </div>
-                    </div>
-
-                    <div class="roadmap-sections-grid">
-                        <!-- Left side: Document Checklist & Smart Score details -->
-                        <div class="roadmap-col">
-                            <div class="inner-roadmap-card">
-                                <h4 data-i18n="checklist_title">📋 Essential Citizen Checklist</h4>
-                                <p class="inner-desc" data-i18n="checklist_desc">Check the documents you ALREADY have. Unchecked documents are marked missing.</p>
-                                
-                                <div class="doc-checklist-group" id="priority-docs-group">
-                                    <h5 data-i18n="priority_docs">Priority Documents</h5>
-                                    <div class="checklist-items-container" id="priority-checklist-container">
-                                        <!-- Dynamic checklist items -->
-                                    </div>
-                                </div>
-
-                                <div class="doc-checklist-group" id="optional-docs-group" style="margin-top: 20px;">
-                                    <h5 data-i18n="optional_docs">Optional Documents</h5>
-                                    <div class="checklist-items-container" id="optional-checklist-container">
-                                        <!-- Dynamic checklist items -->
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="inner-roadmap-card next-action-card" style="margin-top: 20px;">
-                                <h4 data-i18n="next_action_title">💡 Recommended Next Action</h4>
-                                <div id="recommended-action-box">
-                                    <!-- Dynamic recommendation text -->
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Right side: Recommended Schemes & Apply links -->
-                        <div class="roadmap-col">
-                            <div class="inner-roadmap-card flex-scroll-card">
-                                <h4 data-i18n="schemes_recommended">🌟 Recommended Welfare Programs</h4>
-                                <p class="inner-desc" data-i18n="schemes_recommended_desc">Based on your background, here are the programs you are eligible for:</p>
-                                
-                                <div class="recommended-schemes-list" id="recommended-schemes-list">
-                                    <!-- Dynamic scheme cards -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Hero Capabilities Showcase (Timeline) -->
-    <section class="showcase-section" id="showcase">
-        <div class="section-container">
-            <div class="section-header">
-                <span class="section-tag" data-i18n="showcase_tag">INTELLIGENCE PLATFORM</span>
-                <h2 class="section-title" data-i18n="showcase_title">Engineered to <span class="gradient-text">Bridge the Power Gap</span></h2>
-                <p class="section-desc" data-i18n="showcase_desc">Haqqdar is not just a chatbot. It is a digital public utility designed to help you navigate hostile bureaucratic systems.</p>
-            </div>
-
-            <div class="showcase-grid">
-                <!-- Rights Timeline Tracker Showcase -->
-                <div class="showcase-card">
-                    <div class="showcase-card-header">
-                        <span class="badge badge-saffron">Feature Highlight</span>
-                        <h3>Rights Timeline Tracker</h3>
-                    </div>
-                    <p class="showcase-card-text">
-                        Every legal process in India has statutory timelines. Haqqdar maps them visually so you know exactly when the system has exceeded its legal response window.
-                    </p>
-                    <div class="timeline-visual-widget">
-                        <div class="widget-timeline-node completed">
-                            <span class="node-dot"></span>
-                            <div class="node-info">
-                                <h5>Complaint Submitted</h5>
-                                <span class="node-time">Day 0</span>
-                            </div>
-                        </div>
-                        <div class="widget-timeline-node active">
-                            <span class="node-dot"></span>
-                            <div class="node-info">
-                                <h5>Response Due (SHO/Officer)</h5>
-                                <span class="node-time">Day 15</span>
-                            </div>
-                        </div>
-                        <div class="widget-timeline-node">
-                            <span class="node-dot"></span>
-                            <div class="node-info">
-                                <h5>First Appeal Trigger</h5>
-                                <span class="node-time">Day 30</span>
-                            </div>
-                        </div>
-                        <div class="widget-timeline-node">
-                            <span class="node-dot"></span>
-                            <div class="node-info">
-                                <h5>Higher Authority Escalation</h5>
-                                <span class="node-time">Day 45</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Document Gap Detector Showcase -->
-                <div class="showcase-card">
-                    <div class="showcase-card-header">
-                        <span class="badge badge-green">Hero Capability</span>
-                        <h3>Document Gap Detector</h3>
-                    </div>
-                    <p class="showcase-card-text">
-                        Over 70% of welfare and land claims are rejected due to tiny documentation gaps. Our detector helps you fix rejections before they happen.
-                    </p>
-                    <div class="gap-detector-widget">
-                        <div class="detector-header">
-                            <span class="status-indicator-tag status-rejected">Application Denied</span>
-                            <span class="detector-id">Scheme: PM Kisan Samman</span>
-                        </div>
-                        <div class="detector-checklist">
-                            <div class="checklist-item ok">
-                                <span class="chk-status">✓</span>
-                                <span class="chk-name">Aadhaar Card</span>
-                            </div>
-                            <div class="checklist-item ok">
-                                <span class="chk-status">✓</span>
-                                <span class="chk-name">Income Certificate</span>
-                            </div>
-                            <div class="checklist-item missing">
-                                <span class="chk-status">✗</span>
-                                <span class="chk-name">Land Patta / Jamabandi Copy</span>
-                            </div>
-                        </div>
-                        <div class="detector-analysis">
-                            💡 <strong>Likely Cause of Rejection:</strong> Land Mutation Record missing. Land proof must be downloaded from the state land portal and uploaded.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- AI Rights Navigator (Chat Section) -->
-    <section class="chat-section" id="chat">
-        <div class="section-container">
-            <div class="section-header">
-                <span class="section-tag">AI NAVIGATOR</span>
-                <h2 class="section-title">Describe Your Case</h2>
-                <p class="section-desc">Type or speak. AI will identify your rights under the Constitution of India, generate legal files, and list the escalation path.</p>
-            </div>
-
-            <div class="chat-container">
-                <div class="chat-messages" id="chat-messages">
-                    <div class="message bot-message">
-                        <div class="message-avatar">⚖️</div>
-                        <div class="message-content">
-                            <p data-i18n="chat_welcome">Namaste! I'm Haqqdar — your legal rights assistant. Tell me what happened to you in your own words. For example:</p>
-                            <div class="example-queries">
-                                <button class="example-btn" data-query="Police station mein FIR nahi likh rahe, 2 baar gaya">🚔 Police refused my FIR</button>
-                                <button class="example-btn" data-query="Meri salary 3 mahine se nahi aayi hai">💰 Salary not paid for months</button>
-                                <button class="example-btn" data-query="Ration card hone ke baad bhi ration nahi mil raha">🍚 Ration shop denied food grains</button>
-                                <button class="example-btn" data-query="PM Kisan ka paisa nahi aaya, reject ho gaya">🏛️ PM Kisan application rejected</button>
-                                <button class="example-btn" data-query="Tea garden worker minimum wages and basic medical services denied in estate">🌱 Tea garden worker rights denied</button>
-                                <button class="example-btn" data-query="Assam crop damage flood relief application status pending">🌊 Flood crop compensation delay</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="chat-input-container">
-                    <div class="selected-category-badge" id="selected-category-badge" style="display:none;">
-                        <span id="selected-category-text"></span>
-                        <button id="clear-category" aria-label="Clear category">✕</button>
-                    </div>
-                    
-                    <div class="chat-input-wrapper">
-                        <!-- Mic Button with Pulsing Wave -->
-                        <button class="mic-btn" id="mic-btn" title="Speak naturally / बोलें">
-                            <span class="mic-icon">🎙️</span>
-                            <span class="mic-pulse-ring"></span>
-                        </button>
-                        
-                        <textarea
-                            class="chat-input"
-                            id="chat-input"
-                            placeholder="Describe your situation in any language... (e.g. My salary has not been paid...)"
-                            rows="1"
-                            data-i18n-placeholder="chat_placeholder"
-                        ></textarea>
-                        
-                        <button class="send-btn" id="send-btn" aria-label="Send message">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
-                        </button>
-                    </div>
-                    
-                    <div class="voice-status-bar" id="voice-status-bar" style="display: none;">
-                        <span class="recording-indicator"></span>
-                        <span id="voice-status-text">Listening... Speak now</span>
-                    </div>
-
-                    <div class="chat-disclaimer" data-i18n="chat_disclaimer">
-                        Haqqdar grounds all advice in the Constitution of India. It provides legal information, not professional legal counsel.
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Active Case Tracker Section -->
-    <section class="case-tracker-section" id="case-tracker">
-        <div class="section-container">
-            <div class="section-header">
-                <span class="section-tag">COMPANION</span>
-                <h2 class="section-title">My Active Rights Cases</h2>
-                <p class="section-desc">Track response deadlines, checklist requirements, and generate follow-up letters when bureaucracy stalls your rights.</p>
-            </div>
-            <div class="tracker-dashboard" id="tracker-dashboard">
-                <div class="no-cases-card" id="no-cases-card">
-                    <div class="no-cases-icon">📁</div>
-                    <h3>No Active Cases Under Navigation</h3>
-                    <p>Describe your issue in the AI Navigator chat above and click <strong>"Track this Case"</strong> to add it to your dashboard.</p>
-                </div>
-                <div class="active-cases-list" id="active-cases-list" style="display: none;">
-                    <!-- Case cards will be dynamically rendered here -->
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Document Gap Detector Section -->
-    <section class="gap-detector-section" id="gap-detector">
-        <div class="section-container">
-            <div class="section-header">
-                <span class="section-tag" data-i18n="gap_tag">PAPERWORK INTELLIGENCE</span>
-                <h2 class="section-title" data-i18n="gap_title">Document Gap Detector</h2>
-                <p class="section-desc" data-i18n="gap_desc">Bridge your paperwork gaps before submitting to avoid rejections. Check your profile, identify missing documents, and see resolution steps.</p>
-            </div>
-            
-            <div class="gap-detector-layout">
-                <!-- Left Panel: User Profile / Selector -->
-                <div class="gap-left-panel">
-                    <div class="gap-card">
-                        <h3 class="gap-card-title" data-i18n="gap_profile_title">Select Citizen Profile</h3>
-                        <p class="gap-card-subtitle" data-i18n="gap_profile_desc">Choose a pre-defined profile or type a custom one to check required welfare documentation.</p>
-                        
-                        <div class="profile-chips">
-                            <button class="profile-chip active" data-profile="flood" data-i18n="profile_flood">🌾 Assam Flood Relief</button>
-                            <button class="profile-chip" data-profile="tea" data-i18n="profile_tea">☕ Tea Garden Worker</button>
-                            <button class="profile-chip" data-profile="scholarship" data-i18n="profile_scholarship">🎓 Low-Income Student</button>
-                            <button class="profile-chip" data-profile="ration" data-i18n="profile_ration">🍚 Ration Card (NFSA)</button>
-                            <button class="profile-chip" data-profile="farmer" data-i18n="profile_farmer">🚜 PM-Kisan Scheme</button>
-                        </div>
-                        
-                        <div class="custom-profile-wrapper">
-                            <label for="custom-profile-input" class="input-label" data-i18n="gap_custom_label">Or enter custom situation / category:</label>
-                            <div class="custom-input-group">
-                                <input type="text" id="custom-profile-input" placeholder="e.g. daily wage worker in Guwahati, handloom weaver..." autocomplete="off">
-                                <button id="custom-profile-detect-btn" class="detect-btn" data-i18n="gap_detect_btn">Analyze Gaps</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Right Panel: Gap Analysis Results -->
-                <div class="gap-right-panel">
-                    <div class="gap-card results-card" id="gap-results-card">
-                        <div class="gap-results-header">
-                            <div>
-                                <h3 class="gap-card-title" id="gap-scheme-title">Assam Flood Relief Scheme</h3>
-                                <p class="gap-card-subtitle" id="gap-scheme-sub">Welfare documentation requirements and validation</p>
-                            </div>
-                            <div class="progress-bar-container">
-                                <div class="progress-bar-label">
-                                    <span data-i18n="gap_readiness">Submission Readiness</span>
-                                    <strong id="gap-percentage">0%</strong>
-                                </div>
-                                <div class="progress-bar-track">
-                                    <div class="progress-bar-fill" id="gap-bar-fill" style="width: 0%;"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Status Alert Banner -->
-                        <div class="gap-alert-banner alert-high-risk" id="gap-alert-banner">
-                            <span class="alert-icon">⚠️</span>
-                            <div class="alert-info">
-                                <h4 id="gap-alert-title">High Rejection Risk</h4>
-                                <p id="gap-alert-desc">Critical documents are missing. Submitting now will likely lead to delayed processing or immediate rejection.</p>
-                            </div>
-                        </div>
-
-                        <!-- Interactive Checklist Grid -->
-                        <div class="gap-checklist-grid" id="gap-checklist-grid">
-                            <!-- Checklist items dynamically loaded -->
-                        </div>
-
-                        <div class="gap-results-footer">
-                            <p class="footer-help-text" data-i18n="gap_footer_text">
-                                Missing any of these papers? Click the button to request application forms and escalation steps from our AI.
-                            </p>
-                            <button class="gap-ai-action-btn" id="gap-ai-action-btn">
-                                <span>✨</span>
-                                <span data-i18n="gap_ai_btn">Draft Appeals for Missing Documents</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Northeast India Special Section -->
-    <section class="northeast-section" id="northeast">
-        <div class="section-container">
-            <div class="northeast-bg-wrapper">
-                <img src="northeast_bg.png" alt="Northeast India Landscape" class="ne-bg-img">
-                <div class="ne-glass-card">
-                    <div class="section-header" style="text-align: left; margin-bottom: 24px; padding: 0;">
-                        <span class="section-tag" style="background: rgba(255, 110, 20, 0.2); color: var(--saffron);">REGIONAL JUSTICE</span>
-                        <h2 class="section-title" style="margin-top: 10px;">Northeast India Special</h2>
-                        <p class="section-desc" style="max-width: 100%; color: var(--text-primary);">
-                            Special administrative rules, customary tribal law protections, border guidelines, and localized welfare schemes apply to Northeast residents. Access specific legal resources directly.
+                        <h1 class="hero-title" data-i18n="hero_title">
+                            When bureaucracy gets complicated, <span class="highlight-green">Haqqdar</span> shows the way.
+                        </h1>
+                        <p class="hero-subtitle" data-i18n="hero_subtitle">
+                            Millions of Indians lose benefits, wages, justice, and opportunities simply because they do not know the next step. Haqqdar uses AI to identify your rights, generate legal documents, and guide you through every escalation path — in your language.
                         </p>
+                        
+                        <div class="hero-cta">
+                            <button class="btn btn-primary" onclick="switchPage('score')">
+                                <span data-i18n="hero_cta">Find What's Relevant</span>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </button>
+                            <button class="btn btn-ghost" onclick="switchPage('navigator')">
+                                <span data-i18n="nav_navigator">AI Navigator</span>
+                            </button>
+                        </div>
+
+                        <div class="trust-indicators" aria-label="Key platform capabilities">
+                            <div class="indicator-item">English & Hindi</div>
+                            <div class="indicator-item">Northeast Specialization</div>
+                            <div class="indicator-item">Govt Schemes Discovery</div>
+                            <div class="indicator-item">Legal Escalation Paths</div>
+                            <div class="indicator-item">Voice-First Access</div>
+                        </div>
                     </div>
 
-                    <div class="northeast-grid">
-                        <div class="ne-card clickable-card" data-ne-category="ne_land_flood">
-                            <div class="ne-icon">🌊</div>
-                            <h4>Assam Flood & Crop Relief</h4>
-                            <p>Verify compensation timelines for flood damage, crop loss, and Circle Office delays.</p>
-                        </div>
-                        <div class="ne-card clickable-card" data-ne-category="ne_scholarship_tea">
-                            <div class="ne-icon">🌱</div>
-                            <h4>Tea Garden Workers Rights</h4>
-                            <p>Check statutory minimum wages, housing, ration, and child education benefits in tea estates.</p>
-                        </div>
-                        <div class="ne-card clickable-card" data-ne-category="ne_ilp_border">
-                            <div class="ne-icon">🛂</div>
-                            <h4>ILP & Border Entry</h4>
-                            <p>Guidelines for Inner Line Permits (ILP) in Mizoram, Nagaland, Manipur, and Arunachal Pradesh.</p>
-                        </div>
-                        <div class="ne-card clickable-card" data-ne-category="ne_customary_tribal">
-                            <div class="ne-icon">🛖</div>
-                            <h4>Customary Tribal Protection</h4>
-                            <p>Rights under Sixth Schedule, customary land possession, and Autonomous District Councils (ADCs).</p>
+                    <div class="hero-visual">
+                        <div class="rights-console" aria-label="Example rights navigation result">
+                            <div class="console-topline">
+                                <span class="console-status">Live Case Map</span>
+                                <span class="console-ref">BNSS / RTI / NFSA</span>
+                            </div>
+                            <div class="console-card primary-case-card">
+                                <span class="case-label">Problem detected</span>
+                                <h3>Ration denied despite valid card</h3>
+                                <p>Likely NFSA grievance with district escalation path.</p>
+                            </div>
+                            <div class="console-route">
+                                <div class="route-step complete">
+                                    <span>1</span>
+                                    <div>
+                                        <strong>Write complaint</strong>
+                                        <small>Fair Price Shop dealer</small>
+                                    </div>
+                                </div>
+                                <div class="route-step active">
+                                    <span>2</span>
+                                    <div>
+                                        <strong>Escalate</strong>
+                                        <small>Food Inspector / DGRO</small>
+                                    </div>
+                                </div>
+                                <div class="route-step">
+                                    <span>3</span>
+                                    <div>
+                                        <strong>Track deadline</strong>
+                                        <small>Response window visible</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="console-docs">
+                                <div><span class="doc-dot ready"></span>Aadhaar ready</div>
+                                <div><span class="doc-dot missing"></span>Residence proof missing</div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Helplines Directory Section -->
-    <section class="helplines-section" id="helplines">
-        <div class="section-container">
-            <div class="section-header">
-                <span class="section-tag">CITIZEN FIRST</span>
-                <h2 class="section-title">Emergency & Grievance Directory</h2>
-                <p class="section-desc">Instantly dial active government national hotlines and grievance redressal portals.</p>
-            </div>
-            
-            <div class="helplines-grid">
-                <div class="helpline-card">
-                    <div class="hl-number">112</div>
-                    <div class="hl-name">National Emergency Services</div>
-                    <p>Single emergency hotline for police, fire department, and healthcare ambulance services.</p>
-                </div>
-                <div class="helpline-card">
-                    <div class="hl-number">1091</div>
-                    <div class="hl-name">Women Helpline (Domestic)</div>
-                    <p>24/7 dedicated helpline for women in distress, domestic violence, or emergency protection.</p>
-                </div>
-                <div class="helpline-card">
-                    <div class="hl-number">1915</div>
-                    <div class="hl-name">National Consumer Helpline</div>
-                    <p>Report retail fraud, e-commerce service issues, misleading ads, and shopkeeper overcharging.</p>
-                </div>
-                <div class="helpline-card">
-                    <div class="hl-number">1800-11-4555</div>
-                    <div class="hl-name">National Legal Services Authority</div>
-                    <p>Free legal aid, counsel, and Lok Adalat dispute settlement information for weaker sections.</p>
+            <!-- Impact Strip -->
+            <div class="impact-strip" aria-label="Haqqdar platform highlights">
+                <div class="impact-strip-inner">
+                    <div class="impact-item">
+                        <strong>30+</strong>
+                        <span>welfare and rights paths mapped</span>
+                    </div>
+                    <div class="impact-item">
+                        <strong>6</strong>
+                        <span>guided steps from issue to filing</span>
+                    </div>
+                    <div class="impact-item">
+                        <strong>3</strong>
+                        <span>practical outputs: checklist, draft, escalation</span>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+
+            <!-- Rotating Citizen Quotes Section -->
+            <div class="quotes-section">
+                <div class="section-container">
+                    <div class="quote-slider-container">
+                        <div class="quote-slide active" id="quote-1">
+                            <p class="quote-text">"Nobody told me I could appeal the rejection. I thought my dream of studying was over."</p>
+                            <div class="quote-author">
+                                <div class="author-avatar">🎓</div>
+                                <div>
+                                    <h4 class="author-name">Anjali Das</h4>
+                                    <p class="author-meta">Scholarship Applicant, West Bengal</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="quote-slide" id="quote-2">
+                            <p class="quote-text">"I thought the police refusing my complaint was the end. Haqqdar drafted the petition to the SP in minutes."</p>
+                            <div class="quote-author">
+                                <div class="author-avatar">👨🏽‍🌾</div>
+                                <div>
+                                    <h4 class="author-name">Rupesh Gogoi</h4>
+                                    <p class="author-meta">Citizen, Assam</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="quote-slide" id="quote-3">
+                            <p class="quote-text">"My wages were unpaid for months. I didn't know where to go. The labour inspector letter worked."</p>
+                            <div class="quote-author">
+                                <div class="author-avatar">🔨</div>
+                                <div>
+                                    <h4 class="author-name">Madan Lal</h4>
+                                    <p class="author-meta">Daily Wage Worker, Uttar Pradesh</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="quote-slide" id="quote-4">
+                            <p class="quote-text">"Our house was washed away in floods. The system said no, but Haqqdar showed us the exact escalation path."</p>
+                            <div class="quote-author">
+                                <div class="author-avatar">👵🏽</div>
+                                <div>
+                                    <h4 class="author-name">Pema Lepcha</h4>
+                                    <p class="author-meta">Citizen, Sikkim</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="slider-dots">
+                            <span class="slider-dot active" data-index="0"></span>
+                            <span class="slider-dot" data-index="1"></span>
+                            <span class="slider-dot" data-index="2"></span>
+                            <span class="slider-dot" data-index="3"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- How It Works (Visual Journey) -->
+            <div class="how-it-works" id="how-it-works">
+                <div class="section-container">
+                    <div class="section-header">
+                        <span class="section-tag" data-i18n="hiw_tag">THE PROCESS</span>
+                        <h2 class="section-title" data-i18n="hiw_title">From problem to legal document in <span class="gradient-text">60 seconds</span></h2>
+                        <p class="section-desc" data-i18n="hiw_desc">We translate complex bureaucracy into a plain-language action plan in 6 easy steps.</p>
+                    </div>
+                    
+                    <div class="journey-timeline">
+                        <div class="journey-step">
+                            <div class="journey-step-marker">1</div>
+                            <div class="journey-step-card">
+                                <div class="journey-icon">🗣️</div>
+                                <h3 data-i18n="step1_title">Describe Problem</h3>
+                                <p data-i18n="step1_desc">Speak or type in your native tongue about what went wrong.</p>
+                            </div>
+                        </div>
+                        <div class="journey-step">
+                            <div class="journey-step-marker">2</div>
+                            <div class="journey-step-card">
+                                <div class="journey-icon">🧠</div>
+                                <h3 data-i18n="step2_title">AI Analyzes Rights</h3>
+                                <p data-i18n="step2_desc">Our engine maps your issue to the Constitution & active laws.</p>
+                            </div>
+                        </div>
+                        <div class="journey-step">
+                            <div class="journey-step-marker">3</div>
+                            <div class="journey-step-card">
+                                <div class="journey-icon">📄</div>
+                                <h3 data-i18n="step3_title">Document Drafted</h3>
+                                <p data-i18n="step3_desc">Receive a customized, legal written complaint or RTI template.</p>
+                            </div>
+                        </div>
+                        <div class="journey-step">
+                            <div class="journey-step-marker">4</div>
+                            <div class="journey-step-card">
+                                <div class="journey-icon">🧗🏽</div>
+                                <h3 data-i18n="step4_title">Escalation Path</h3>
+                                <p data-i18n="step4_desc">Know exactly whom to contact if your initial plea is ignored.</p>
+                            </div>
+                        </div>
+                        <div class="journey-step">
+                            <div class="journey-step-marker">5</div>
+                            <div class="journey-step-card">
+                                <div class="journey-icon">📅</div>
+                                <h3 data-i18n="step5_title">Deadline Tracking</h3>
+                                <p data-i18n="step5_desc">Track response windows and calendar milestones automatically.</p>
+                            </div>
+                        </div>
+                        <div class="journey-step">
+                            <div class="journey-step-marker">6</div>
+                            <div class="journey-step-card">
+                                <div class="journey-icon">🏁</div>
+                                <h3 data-i18n="step6_title">Resolution Guidance</h3>
+                                <p data-i18n="step6_desc">Follow-through templates until your case reaches a verdict.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Platform Engines Section -->
+            <div class="showcase-section" id="showcase">
+                <div class="section-container">
+                    <div class="section-header">
+                        <span class="section-tag" data-i18n="showcase_tag">INTELLIGENCE PLATFORM</span>
+                        <h2 class="section-title" data-i18n="showcase_title">Engineered to <span class="gradient-text">Bridge the Power Gap</span></h2>
+                        <p class="section-desc" data-i18n="showcase_desc">Haqqdar is not just a chatbot. It is a digital public utility designed to help you navigate hostile bureaucratic systems.</p>
+                    </div>
+
+                    <div class="showcase-grid">
+                        <div class="showcase-card clickable-showcase-card" onclick="switchPage('gps')">
+                            <div class="showcase-card-header">
+                                <span class="badge badge-saffron">Interactive Tool</span>
+                                <h3>Bureaucracy GPS Roadmap</h3>
+                            </div>
+                            <p class="showcase-card-text">
+                                Every legal process in India has statutory timelines. Haqqdar maps them visually so you know exactly when the system has exceeded its legal response window.
+                            </p>
+                            <div class="timeline-visual-widget">
+                                <div class="widget-timeline-node completed">
+                                    <span class="node-dot"></span>
+                                    <div class="node-info">
+                                        <h5>Complaint Submitted</h5>
+                                        <span class="node-time">Day 0</span>
+                                    </div>
+                                </div>
+                                <div class="widget-timeline-node active">
+                                    <span class="node-dot"></span>
+                                    <div class="node-info">
+                                        <h5>Response Due (Officer)</h5>
+                                        <span class="node-time">Day 15</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="showcase-card clickable-showcase-card" onclick="switchPage('gap')">
+                            <div class="showcase-card-header">
+                                <span class="badge badge-green">Hero Capability</span>
+                                <h3>Document Gap Detector</h3>
+                            </div>
+                            <p class="showcase-card-text">
+                                Over 70% of welfare and land claims are rejected due to tiny documentation gaps. Our detector helps you fix rejections before they happen.
+                            </p>
+                            <div class="gap-detector-widget">
+                                <div class="detector-header">
+                                    <span class="status-indicator-tag status-rejected">Application Denied</span>
+                                    <span class="detector-id">Scheme: PM Kisan Samman</span>
+                                </div>
+                                <div class="detector-checklist">
+                                    <div class="checklist-item ok">✓ Aadhaar Card</div>
+                                    <div class="checklist-item missing">✗ Land Patta / Mutation Copy</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Emergency Helplines Directory -->
+            <div class="helplines-section" id="helplines">
+                <div class="section-container">
+                    <div class="section-header">
+                        <span class="section-tag">CITIZEN FIRST</span>
+                        <h2 class="section-title">Emergency & Grievance Directory</h2>
+                        <p class="section-desc">Instantly dial active government national hotlines and grievance redressal portals.</p>
+                    </div>
+                    
+                    <div class="helplines-grid">
+                        <div class="helpline-card">
+                            <div class="hl-number">112</div>
+                            <div class="hl-name">National Emergency Services</div>
+                            <p>Single emergency hotline for police, fire department, and healthcare ambulance services.</p>
+                        </div>
+                        <div class="helpline-card">
+                            <div class="hl-number">1091</div>
+                            <div class="hl-name">Women Helpline (Domestic)</div>
+                            <p>24/7 dedicated helpline for women in distress, domestic violence, or emergency protection.</p>
+                        </div>
+                        <div class="helpline-card">
+                            <div class="hl-number">1915</div>
+                            <div class="hl-name">National Consumer Helpline</div>
+                            <p>Report retail fraud, e-commerce service issues, misleading ads, and shopkeeper overcharging.</p>
+                        </div>
+                        <div class="helpline-card">
+                            <div class="hl-number">1800-11-4555</div>
+                            <div class="hl-name">National Legal Services Authority</div>
+                            <p>Free legal aid, counsel, and Lok Adalat dispute settlement information for weaker sections.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ============================================ -->
+        <!-- VIEW 2: AI NAVIGATOR (Chat & Case Dashboard) -->
+        <!-- ============================================ -->
+        <section class="view-page" id="view-navigator" style="display: none;">
+            <div class="app-page-container">
+                <div class="page-side-layout">
+                    <!-- Main Chat Panel -->
+                    <div class="chat-main-panel">
+                        <div class="section-header" style="text-align: left; margin-bottom: 20px; padding:0;">
+                            <span class="section-tag">AI RIGHTS NAVIGATOR</span>
+                            <h2 class="section-title" style="font-size: 24px; margin-top: 5px;">Describe Your Case</h2>
+                            <p class="section-desc" style="max-width: 100%;">Type or speak. AI will identify your rights under the Constitution of India, generate legal files, and list the escalation path.</p>
+                        </div>
+
+                        <div class="chat-container">
+                            <div class="chat-messages" id="chat-messages">
+                                <div class="message bot-message">
+                                    <div class="message-avatar">⚖️</div>
+                                    <div class="message-content">
+                                        <p data-i18n="chat_welcome">Namaste! I'm Haqqdar — your legal rights assistant. Tell me what happened to you in your own words. For example:</p>
+                                        <div class="example-queries">
+                                            <button class="example-btn" data-query="Police station mein FIR nahi likh rahe, 2 baar gaya">🚔 Police refused my FIR</button>
+                                            <button class="example-btn" data-query="Meri salary 3 mahine se nahi aayi hai">💰 Salary not paid for months</button>
+                                            <button class="example-btn" data-query="Ration card hone ke baad bhi ration nahi mil raha">🍚 Ration shop denied food grains</button>
+                                            <button class="example-btn" data-query="PM Kisan ka paisa nahi aaya, reject ho gaya">🏛️ PM Kisan application rejected</button>
+                                            <button class="example-btn" data-query="Tea garden worker minimum wages and basic medical services denied in estate">🌱 Tea garden worker rights denied</button>
+                                            <button class="example-btn" data-query="Assam crop damage flood relief application status pending">🌊 Flood crop compensation delay</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="chat-input-container">
+                                <div class="selected-category-badge" id="selected-category-badge" style="display:none;">
+                                    <span id="selected-category-text"></span>
+                                    <button id="clear-category" aria-label="Clear category">✕</button>
+                                </div>
+                                
+                                <div class="chat-input-wrapper">
+                                    <!-- Mic Button with Pulsing Wave -->
+                                    <button class="mic-btn" id="mic-btn" title="Speak naturally / बोलें">
+                                        <span class="mic-icon">🎙️</span>
+                                        <span class="mic-pulse-ring"></span>
+                                    </button>
+                                    
+                                    <textarea
+                                        class="chat-input"
+                                        id="chat-input"
+                                        placeholder="Describe your situation in any language... (e.g. My salary has not been paid...)"
+                                        rows="1"
+                                        data-i18n-placeholder="chat_placeholder"
+                                    ></textarea>
+                                    
+                                    <button class="send-btn" id="send-btn" aria-label="Send message">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                                    </button>
+                                </div>
+                                
+                                <div class="voice-status-bar" id="voice-status-bar" style="display: none;">
+                                    <span class="recording-indicator"></span>
+                                    <span id="voice-status-text">Listening... Speak now</span>
+                                </div>
+
+                                <div class="chat-disclaimer" data-i18n="chat_disclaimer">
+                                    Haqqdar grounds all advice in the Constitution of India. It provides legal information, not professional legal counsel.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Active Case Tracker Section -->
+                        <div class="case-tracker-section" id="case-tracker" style="margin-top: 40px; padding:0;">
+                            <div class="section-header" style="text-align: left; margin-bottom: 20px; padding: 0;">
+                                <span class="section-tag">COMPANION</span>
+                                <h3 class="section-title" style="font-size: 20px; margin-top: 5px;">My Active Rights Cases</h3>
+                                <p class="section-desc" style="max-width: 100%;">Track response deadlines, checklist requirements, and generate follow-up letters when bureaucracy stalls your rights.</p>
+                            </div>
+                            <div class="tracker-dashboard" id="tracker-dashboard">
+                                <div class="no-cases-card" id="no-cases-card">
+                                    <div class="no-cases-icon">📁</div>
+                                    <h3>No Active Cases Under Navigation</h3>
+                                    <p>Describe your issue in the AI Navigator chat above and click <strong>"Track this Case"</strong> to add it to your dashboard.</p>
+                                </div>
+                                <div class="active-cases-list" id="active-cases-list" style="display: none;">
+                                    <!-- Case cards will be dynamically rendered here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sidebar Quick Actions -->
+                    <div class="chat-sidebar-panel">
+                        <div class="sidebar-card">
+                            <h4>📋 Languages Supported</h4>
+                            <div class="sidebar-lang-item"><span>🇮🇳</span> English</div>
+                            <div class="sidebar-lang-item"><span>🇮🇳</span> हिंदी (Hindi)</div>
+                        </div>
+                        <div class="sidebar-card">
+                            <h4>⚡ Quick Shortcuts</h4>
+                            <div class="sidebar-action-item" onclick="switchPage('gap')">📄 Check Document Gaps</div>
+                            <div class="sidebar-action-item" onclick="switchPage('gps')">🗺️ Open Bureaucracy GPS</div>
+                            <div class="sidebar-action-item" onclick="switchPage('benefits')">🔍 Find Welfare Schemes</div>
+                            <div class="sidebar-action-item" onclick="switchPage('score')">📊 Get Citizen Score</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ============================================ -->
+        <!-- VIEW 3: DOCUMENT GAP DETECTOR -->
+        <!-- ============================================ -->
+        <section class="view-page" id="view-gap" style="display: none;">
+            <div class="app-page-container">
+                <div class="section-header">
+                    <span class="section-tag" data-i18n="gap_tag">PAPERWORK INTELLIGENCE</span>
+                    <h2 class="section-title" data-i18n="gap_title">Document Gap Detector</h2>
+                    <p class="section-desc" data-i18n="gap_desc">Bridge your paperwork gaps before submitting to avoid rejections. Check your profile, identify missing documents, and see resolution steps.</p>
+                </div>
+                
+                <div class="gap-detector-layout">
+                    <!-- Left Panel: Profile Chips & Custom Input -->
+                    <div class="gap-left-panel">
+                        <div class="gap-card">
+                            <h3 class="gap-card-title" data-i18n="gap_profile_title">Select Citizen Profile</h3>
+                            <p class="gap-card-subtitle" data-i18n="gap_profile_desc">Choose a pre-defined profile or type a custom one to check required welfare documentation.</p>
+                            
+                            <div class="profile-chips">
+                                <button class="profile-chip active" data-profile="flood" data-i18n="profile_flood">🌾 Assam Flood Relief</button>
+                                <button class="profile-chip" data-profile="tea" data-i18n="profile_tea">☕ Tea Garden Worker</button>
+                                <button class="profile-chip" data-profile="scholarship" data-i18n="profile_scholarship">🎓 Low-Income Student</button>
+                                <button class="profile-chip" data-profile="ration" data-i18n="profile_ration">🍚 Ration Card (NFSA)</button>
+                                <button class="profile-chip" data-profile="farmer" data-i18n="profile_farmer">🚜 PM-Kisan Scheme</button>
+                            </div>
+                            
+                            <div class="custom-profile-wrapper">
+                                <label for="custom-profile-input" class="input-label" data-i18n="gap_custom_label">Or enter custom situation / category:</label>
+                                <div class="custom-input-group">
+                                    <input type="text" id="custom-profile-input" placeholder="e.g. daily wage worker in Guwahati, handloom weaver..." autocomplete="off">
+                                    <button id="custom-profile-detect-btn" class="detect-btn" data-i18n="gap_detect_btn">Analyze Gaps</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Right Panel: Gap Checklists -->
+                    <div class="gap-right-panel">
+                        <div class="gap-card results-card" id="gap-results-card">
+                            <div class="gap-results-header">
+                                <div>
+                                    <h3 class="gap-card-title" id="gap-scheme-title">Assam Flood Relief Scheme</h3>
+                                    <p class="gap-card-subtitle" id="gap-scheme-sub">Welfare documentation requirements and validation</p>
+                                </div>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar-label">
+                                        <span data-i18n="gap_readiness">Submission Readiness</span>
+                                        <strong id="gap-percentage">0%</strong>
+                                    </div>
+                                    <div class="progress-bar-track">
+                                        <div class="progress-bar-fill" id="gap-bar-fill" style="width: 0%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Status Alert Banner -->
+                            <div class="gap-alert-banner alert-high-risk" id="gap-alert-banner">
+                                <span class="alert-icon">⚠️</span>
+                                <div class="alert-info">
+                                    <h4 id="gap-alert-title">High Rejection Risk</h4>
+                                    <p id="gap-alert-desc">Critical documents are missing. Submitting now will likely lead to delayed processing or immediate rejection.</p>
+                                </div>
+                            </div>
+
+                            <!-- Interactive Checklist Grid -->
+                            <div class="gap-checklist-grid" id="gap-checklist-grid">
+                                <!-- Checklist items dynamically loaded -->
+                            </div>
+
+                            <div class="gap-results-footer">
+                                <p class="footer-help-text" data-i18n="gap_footer_text">
+                                    Missing any of these papers? Click the button to request application forms and escalation steps from our AI.
+                                </p>
+                                <button class="gap-ai-action-btn" id="gap-ai-action-btn">
+                                    <span>✨</span>
+                                    <span data-i18n="gap_ai_btn">Draft Appeals for Missing Documents</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ============================================ -->
+        <!-- VIEW 4: BENEFITS DISCOVERY -->
+        <!-- ============================================ -->
+        <section class="view-page" id="view-benefits" style="display: none;">
+            <div class="app-page-container">
+                <div class="section-header">
+                    <span class="section-tag">BENEFITS DISCOVERY</span>
+                    <h2 class="section-title">Find Hidden Benefits & Entitlements</h2>
+                    <p class="section-desc">Answer a few questions about your background to discover all central, state, and Northeast specific welfare programs you qualify for.</p>
+                </div>
+
+                <div class="page-side-layout">
+                    <!-- Left: Profile Form Card -->
+                    <div class="form-container-card">
+                        <div class="gap-card">
+                            <h3 class="gap-card-title">Describe Your Background</h3>
+                            <p class="gap-card-subtitle" style="margin-bottom: 20px;">We use these details to run our offline rule-based and AI scheme matching engines.</p>
+                            
+                            <form id="benefits-profile-form" onsubmit="event.preventDefault(); findBenefits();">
+                                <div class="form-grid">
+                                    <div class="form-item">
+                                        <label for="profile-age">Age</label>
+                                        <input type="number" id="profile-age" min="1" max="120" placeholder="Enter age (e.g. 24)" required>
+                                    </div>
+                                    <div class="form-item">
+                                        <label for="profile-state">State / Region</label>
+                                        <select id="profile-state" required>
+                                            <option value="">Select State</option>
+                                            <option value="All India">All India (General)</option>
+                                            <option value="Assam">Assam</option>
+                                            <option value="Meghalaya">Meghalaya</option>
+                                            <option value="Nagaland">Nagaland</option>
+                                            <option value="Manipur">Manipur</option>
+                                            <option value="Mizoram">Mizoram</option>
+                                            <option value="Arunachal">Arunachal Pradesh</option>
+                                            <option value="Tripura">Tripura</option>
+                                            <option value="Sikkim">Sikkim</option>
+                                            <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                            <option value="West Bengal">West Bengal</option>
+                                            <option value="Bihar">Bihar</option>
+                                            <option value="Karnataka">Karnataka</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-item">
+                                        <label for="profile-gender">Gender</label>
+                                        <select id="profile-gender" required>
+                                            <option value="">Select Gender</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-item">
+                                        <label for="profile-occupation">Occupation</label>
+                                        <select id="profile-occupation" required>
+                                            <option value="">Select Occupation</option>
+                                            <option value="Student">Student</option>
+                                            <option value="Farmer">Farmer</option>
+                                            <option value="Tea Garden Worker">Tea Garden Worker</option>
+                                            <option value="Daily Wage Laborer">Daily Wage Laborer</option>
+                                            <option value="Self Employed / Micro Shop">Self Employed / Micro Business</option>
+                                            <option value="Unemployed / Job Seeker">Job Seeker / Unemployed</option>
+                                            <option value="Senior Citizen">Senior Citizen</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-item">
+                                        <label for="profile-income">Annual Family Income (₹)</label>
+                                        <select id="profile-income" required>
+                                            <option value="">Select Income Range</option>
+                                            <option value="50000">Below ₹50,000</option>
+                                            <option value="150000">₹50,000 – ₹1.5 Lakh</option>
+                                            <option value="300000">₹1.5 Lakh – ₹3 Lakh</option>
+                                            <option value="500000">₹3 Lakh – ₹5 Lakh</option>
+                                            <option value="800000">Above ₹5 Lakh</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-item">
+                                        <label for="profile-category">Social Category</label>
+                                        <select id="profile-category" required>
+                                            <option value="">Select Category</option>
+                                            <option value="General">General / Unreserved</option>
+                                            <option value="OBC">OBC (Other Backward Classes)</option>
+                                            <option value="SC">SC (Scheduled Caste)</option>
+                                            <option value="ST">ST (Scheduled Tribe)</option>
+                                            <option value="Minority">Minority Communities</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 20px;">Search Eligible Benefits →</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Right: Results Grid -->
+                    <div class="results-container-panel">
+                        <div id="benefits-results-header" style="margin-bottom: 15px;">
+                            <h4 style="font-size: 15px; color: var(--text-secondary);">Filter results by category or run matching.</h4>
+                        </div>
+                        <div class="schemes-grid" id="benefits-results-grid">
+                            <!-- Dynamically loaded eligible cards -->
+                            <div class="no-cases-card" style="grid-column: 1/-1; padding: 40px; text-align: center;">
+                                <div class="no-cases-icon" style="font-size: 40px; margin-bottom: 15px;">🔍</div>
+                                <h4>No active search matching run.</h4>
+                                <p>Fill out the profile on the left to identify specific rights, scholarships, and housing programs.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ============================================ -->
+        <!-- VIEW 5: BUREAUCRACY GPS -->
+        <!-- ============================================ -->
+        <section class="view-page" id="view-gps" style="display: none;">
+            <div class="app-page-container">
+                <div class="section-header">
+                    <span class="section-tag">BUREAUCRACY GPS</span>
+                    <h2 class="section-title">Your Step-by-Step Resolution Roadmap</h2>
+                    <p class="section-desc">Know exactly who to call, what to write, and when response deadlines expire when your application is denied or delayed.</p>
+                </div>
+
+                <div class="gps-layout">
+                    <!-- Left Column: GPS Path Selectors & Timeline steps -->
+                    <div class="gps-timeline-column">
+                        <div class="gps-selector-card">
+                            <label for="gps-path-select" class="input-label">Select Escalation Scenario:</label>
+                            <select id="gps-path-select" onchange="loadGPSPath(this.value)" style="width: 100%;">
+                                <option value="PM-KISAN Rejection">PM-KISAN Rejection & Pending Instalments</option>
+                                <option value="Scholarship Rejection">Student Scholarship Delayed / Rejected</option>
+                                <option value="PMAY Application">PMAY Rural/Urban Housing Application Path</option>
+                                <option value="Wages/Salary Unpaid">Unpaid Wages & Informal Labor Abuse</option>
+                                <option value="Ration/PDS Denied">Ration Shop Denying Food Grains</option>
+                                <option value="Northeast Special">Northeast Land Mutation / Customary Appeal</option>
+                            </select>
+                        </div>
+
+                        <!-- Active Timeline Nodes -->
+                        <div class="gps-journey-nodes" id="gps-timeline-nodes-container">
+                            <!-- Timelines loaded dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Focus Step Detail Panel -->
+                    <div class="gps-detail-column">
+                        <div class="gap-card results-card" id="gps-step-details-card" style="position: sticky; top: 80px;">
+                            <div class="gps-detail-header">
+                                <span class="badge badge-saffron" id="gps-detail-badge">Level 1</span>
+                                <h3 id="gps-detail-title">Check Rejection Reason</h3>
+                                <p class="gap-card-subtitle" id="gps-detail-subtitle">Grievance Escalation details</p>
+                            </div>
+
+                            <div class="gps-detail-info-block">
+                                <div class="info-row">
+                                    <strong>Authority Desk:</strong>
+                                    <span id="gps-detail-authority">PM-KISAN Portal</span>
+                                </div>
+                                <div class="info-row">
+                                    <strong>Contact Point / Portal:</strong>
+                                    <span id="gps-detail-contact">pmkisan.gov.in</span>
+                                </div>
+                                <div class="info-row">
+                                    <strong>Standard Response Deadline:</strong>
+                                    <span id="gps-detail-deadline" style="color: var(--saffron); font-weight: 600;">Immediate</span>
+                                </div>
+                                <div class="info-row">
+                                    <strong>Required Papers / IDs:</strong>
+                                    <span id="gps-detail-docs">Application ID / OTP</span>
+                                </div>
+                            </div>
+
+                            <div class="gps-detail-instruction">
+                                <h5>Recommended Action Plan:</h5>
+                                <p id="gps-detail-action">Log in using your registered mobile number and check the official reason code (e.g. Land record mismatch, Aadhaar authentication failure).</p>
+                            </div>
+
+                            <div class="gps-detail-footer">
+                                <button class="btn btn-primary" id="gps-action-btn" style="width: 100%;">
+                                    <span>✨</span> Consult AI on this Step
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ============================================ -->
+        <!-- VIEW 6: NORTHEAST HUB -->
+        <!-- ============================================ -->
+        <section class="view-page" id="view-northeast" style="display: none;">
+            <div class="app-page-container">
+                <div class="section-header">
+                    <span class="section-tag" style="background: rgba(255, 110, 20, 0.2); color: var(--saffron);">REGIONAL JUSTICE</span>
+                    <h2 class="section-title">Northeast India Regional Hub</h2>
+                    <p class="section-desc">Special administrative rules, customary tribal law protections, Inner Line Permits, and state-specific welfare schemes for Northeast residents.</p>
+                </div>
+
+                <div class="northeast-layout">
+                    <!-- State selectors sidebar -->
+                    <div class="ne-sidebar">
+                        <div class="gap-card">
+                            <h3 class="gap-card-title" style="font-size: 15px;">Select State</h3>
+                            <p class="gap-card-subtitle" style="margin-bottom: 12px;">Filter programs & documents by state:</p>
+                            <div class="ne-state-list">
+                                <button class="ne-state-btn active" data-state="Assam">Assam (অসম)</button>
+                                <button class="ne-state-btn" data-state="Meghalaya">Meghalaya</button>
+                                <button class="ne-state-btn" data-state="Nagaland">Nagaland</button>
+                                <button class="ne-state-btn" data-state="Manipur">Manipur</button>
+                                <button class="ne-state-btn" data-state="Mizoram">Mizoram</button>
+                                <button class="ne-state-btn" data-state="Arunachal">Arunachal Pradesh</button>
+                                <button class="ne-state-btn" data-state="Tripura">Tripura</button>
+                                <button class="ne-state-btn" data-state="Sikkim">Sikkim</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Regional Grid and Schemes list -->
+                    <div class="ne-main-content">
+                        <!-- Clickable Regional Categories -->
+                        <div class="northeast-grid" style="margin-bottom: 30px;">
+                            <div class="ne-card clickable-card" data-ne-category="ne_land_flood">
+                                <div class="ne-icon">🌊</div>
+                                <h4>Assam Flood & Crop Relief</h4>
+                                <p>Verify compensation timelines for flood damage, crop loss, and Circle Office delays.</p>
+                            </div>
+                            <div class="ne-card clickable-card" data-ne-category="ne_scholarship_tea">
+                                <div class="ne-icon">🌱</div>
+                                <h4>Tea Garden Workers Rights</h4>
+                                <p>Check statutory minimum wages, housing, ration, and child education benefits in tea estates.</p>
+                            </div>
+                            <div class="ne-card clickable-card" data-ne-category="ne_ilp_border">
+                                <div class="ne-icon">🛂</div>
+                                <h4>ILP & Border Entry</h4>
+                                <p>Guidelines for Inner Line Permits (ILP) in Mizoram, Nagaland, Manipur, and Arunachal Pradesh.</p>
+                            </div>
+                            <div class="ne-card clickable-card" data-ne-category="ne_customary_tribal">
+                                <div class="ne-icon">🛖</div>
+                                <h4>Customary Tribal Protection</h4>
+                                <p>Rights under Sixth Schedule, customary land possession, and Autonomous District Councils (ADCs).</p>
+                            </div>
+                        </div>
+
+                        <div class="gap-card">
+                            <h3 class="gap-card-title" id="ne-state-schemes-title">Welfare Schemes in Assam</h3>
+                            <p class="gap-card-subtitle" style="margin-bottom: 20px;">Regional schemes recommended for residents of this state.</p>
+                            <div class="schemes-grid" id="ne-state-schemes-grid">
+                                <!-- Loaded dynamically based on active state -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ============================================ -->
+        <!-- VIEW 7: CITIZEN SCORE (Life Navigator) -->
+        <!-- ============================================ -->
+        <section class="view-page" id="view-score" style="display: none;">
+            <div class="app-page-container">
+                <div class="section-header">
+                    <span class="section-tag" data-i18n="life_nav_tag">ONBOARDING & ROADMAP</span>
+                    <h2 class="section-title" data-i18n="life_nav_title">Let's Find What's Relevant For You</h2>
+                    <p class="section-desc" data-i18n="life_nav_desc">Most Indians don't know which documents, schemes, benefits, and rights apply to them. Answer a few questions and Haqqdar will create your personalized roadmap.</p>
+                </div>
+
+                <div class="life-navigator-section" style="padding:0;">
+                    <div class="life-nav-layout">
+                        <div class="life-nav-steps-grid">
+                            <!-- STEP 1: IDENTITY SELECTION -->
+                            <div class="life-nav-card" id="step1-card">
+                                <h3 class="step-title" data-i18n="life_nav_step1_title">Step 1: Who are you?</h3>
+                                <p class="step-desc" data-i18n="life_nav_step1_desc">Select the category that best describes your profile:</p>
+                                <div class="identity-grid">
+                                    <button class="identity-card" data-identity="student">
+                                        <span class="identity-emoji">👦</span>
+                                        <span class="identity-name" data-i18n="id_student">Student (13–17)</span>
+                                    </button>
+                                    <button class="identity-card" data-identity="young_adult">
+                                        <span class="identity-emoji">🧑</span>
+                                        <span class="identity-name" data-i18n="id_young_adult">Young Adult (18–25)</span>
+                                    </button>
+                                    <button class="identity-card" data-identity="job_seeker">
+                                        <span class="identity-emoji">👨</span>
+                                        <span class="identity-name" data-i18n="id_job_seeker">Job Seeker</span>
+                                    </button>
+                                    <button class="identity-card" data-identity="woman">
+                                        <span class="identity-emoji">👩</span>
+                                        <span class="identity-name" data-i18n="id_woman">Woman</span>
+                                    </button>
+                                    <button class="identity-card" data-identity="farmer">
+                                        <span class="identity-emoji">👨‍🌾</span>
+                                        <span class="identity-name" data-i18n="id_farmer">Farmer</span>
+                                    </button>
+                                    <button class="identity-card" data-identity="tea_worker">
+                                        <span class="identity-emoji">☕</span>
+                                        <span class="identity-name" data-i18n="id_tea_worker">Tea Garden Worker</span>
+                                    </button>
+                                    <button class="identity-card" data-identity="senior">
+                                        <span class="identity-emoji">🧓</span>
+                                        <span class="identity-name" data-i18n="id_senior">Senior Citizen</span>
+                                    </button>
+                                    <button class="identity-card" data-identity="disability">
+                                        <span class="identity-emoji">♿</span>
+                                        <span class="identity-name" data-i18n="id_disability">Person with Disability</span>
+                                    </button>
+                                    <button class="identity-card" data-identity="northeast">
+                                        <span class="identity-emoji">🏔️</span>
+                                        <span class="identity-name" data-i18n="id_northeast">Northeast Resident</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- STEP 2: AGE TOGGLE -->
+                            <div class="life-nav-card" id="step2-card">
+                                <h3 class="step-title" data-i18n="life_nav_step2_title">Step 2: Are you 18 years or older?</h3>
+                                <p class="step-desc" data-i18n="life_nav_step2_desc">This determines eligibility for major voting rights, PAN, and adult documentation.</p>
+                                <div class="age-toggle-group">
+                                    <button class="age-btn" id="age-yes-btn">YES</button>
+                                    <button class="age-btn" id="age-no-btn">NO</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PERSONALIZED ROADMAP OUTPUT (Initial Hidden, shown on selection) -->
+                        <div class="roadmap-result" id="roadmap-result" style="display: none; margin-top: 30px;">
+                            <div class="roadmap-header">
+                                <div class="roadmap-header-info">
+                                    <h3 data-i18n="roadmap_heading">🎯 Your Citizen Roadmap</h3>
+                                    <p data-i18n="roadmap_subheading">Customized legal checklist and recommended schemes based on your profile.</p>
+                                </div>
+                                <div class="roadmap-score-box">
+                                    <div class="radial-progress-container">
+                                        <svg class="radial-progress" width="80" height="80" viewBox="0 0 80 80">
+                                            <circle class="radial-bg" cx="40" cy="40" r="34" />
+                                            <circle class="radial-fill" id="readiness-radial" cx="40" cy="40" r="34" stroke-dasharray="213.6" stroke-dashoffset="213.6" />
+                                        </svg>
+                                        <div class="radial-text" id="readiness-percentage">0%</div>
+                                    </div>
+                                    <div class="score-label" data-i18n="score_label">Citizen Readiness</div>
+                                </div>
+                            </div>
+
+                            <div class="roadmap-sections-grid">
+                                <!-- Left side: Document Checklist -->
+                                <div class="roadmap-col">
+                                    <div class="inner-roadmap-card">
+                                        <h4 data-i18n="checklist_title">📋 Essential Citizen Checklist</h4>
+                                        <p class="inner-desc" data-i18n="checklist_desc">Check the documents you ALREADY have. Unchecked documents are marked missing.</p>
+                                        
+                                        <div class="doc-checklist-group" id="priority-docs-group">
+                                            <h5 data-i18n="priority_docs">Priority Documents</h5>
+                                            <div class="checklist-items-container" id="priority-checklist-container">
+                                                <!-- Dynamic checklist items -->
+                                            </div>
+                                        </div>
+
+                                        <div class="doc-checklist-group" id="optional-docs-group" style="margin-top: 20px;">
+                                            <h5 data-i18n="optional_docs">Optional Documents</h5>
+                                            <div class="checklist-items-container" id="optional-checklist-container">
+                                                <!-- Dynamic checklist items -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="inner-roadmap-card next-action-card" style="margin-top: 20px;">
+                                        <h4 data-i18n="next_action_title">💡 Recommended Next Action</h4>
+                                        <div id="recommended-action-box">
+                                            <!-- Dynamic recommendation text -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Right side: Recommended Schemes -->
+                                <div class="roadmap-col">
+                                    <div class="inner-roadmap-card flex-scroll-card">
+                                        <h4 data-i18n="schemes_recommended">🌟 Recommended Welfare Programs</h4>
+                                        <p class="inner-desc" data-i18n="schemes_recommended_desc">Based on your background, here are the programs you are eligible for:</p>
+                                        
+                                        <div class="recommended-schemes-list" id="recommended-schemes-list">
+                                            <!-- Dynamic scheme cards -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ============================================ -->
+        <!-- VIEW 8: SCHEMES DIRECTORY -->
+        <!-- ============================================ -->
+        <section class="view-page" id="view-schemes" style="display: none;">
+            <div class="app-page-container">
+                <div class="section-header">
+                    <span class="section-tag">CATALOG</span>
+                    <h2 class="section-title">Welfare Schemes Directory</h2>
+                    <p class="section-desc">Search and browse all 30+ major central, state, and Northeast specific welfare programs.</p>
+                </div>
+
+                <div class="schemes-search-bar" style="margin-bottom: 30px; display: flex; gap: 15px;">
+                    <input type="text" id="schemes-search-input" placeholder="Search by scheme name, category, or state..." style="flex:1;" oninput="filterSchemesDirectory()">
+                    <select id="schemes-category-filter" onchange="filterSchemesDirectory()" style="width: 220px;">
+                        <option value="All">All Categories</option>
+                        <option value="Housing">Housing</option>
+                        <option value="Employment">Employment</option>
+                        <option value="Agriculture">Agriculture</option>
+                        <option value="Health">Health</option>
+                        <option value="Business">Business</option>
+                        <option value="Education">Education</option>
+                        <option value="Energy">Energy</option>
+                        <option value="Welfare">Welfare</option>
+                    </select>
+                </div>
+
+                <div class="schemes-grid" id="schemes-directory-grid">
+                    <!-- Complete 30+ schemes directory loaded dynamically -->
+                </div>
+            </div>
+        </section>
+
+    </main>
 
     <!-- Footer -->
     <footer class="footer">
