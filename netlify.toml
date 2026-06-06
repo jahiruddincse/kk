@@ -1,0 +1,6 @@
+# netlify.toml
+# Netlify configuration file for Haqqdar deployment.
+
+[build]
+  publish = "."
+  functions = "netlify/functions"
