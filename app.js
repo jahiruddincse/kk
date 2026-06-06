@@ -1975,7 +1975,19 @@ function copyDocumentToClipboard(btn) {
 // 7. Case Tracker Engine
 // ============================================
 
-let activeCases = JSON.parse(localStorage.getItem('haqdar_cases')) || [];
+let activeCases = [];
+try {
+    const storedCases = localStorage.getItem('haqdar_cases');
+    if (storedCases) {
+        activeCases = JSON.parse(storedCases);
+        if (!Array.isArray(activeCases)) {
+            activeCases = [];
+        }
+    }
+} catch (e) {
+    console.error("Failed to parse active cases from localStorage:", e);
+    activeCases = [];
+}
 
 function addCaseToTracker(category) {
     const data = LEGAL_DATA[category];
@@ -2025,20 +2037,22 @@ function renderCaseDashboard() {
 
         // Render checklist status
         let checklistHTML = '<div class="tracker-case-checklist">';
-        item.checklist.forEach((doc, docIdx) => {
-            const isPresent = doc.status === 'present';
-            checklistHTML += `
-                <label class="tracker-chk-item">
-                    <input type="checkbox" ${isPresent ? 'checked' : ''} onchange="toggleCaseDoc(${index}, ${docIdx}, this.checked)">
-                    <span>${doc.name}</span>
-                </label>
-            `;
-        });
+        if (item.checklist && Array.isArray(item.checklist)) {
+            item.checklist.forEach((doc, docIdx) => {
+                const isPresent = doc.status === 'present';
+                checklistHTML += `
+                    <label class="tracker-chk-item">
+                        <input type="checkbox" ${isPresent ? 'checked' : ''} onchange="toggleCaseDoc(${index}, ${docIdx}, this.checked)">
+                        <span>${doc.name}</span>
+                    </label>
+                `;
+            });
+        }
         checklistHTML += '</div>';
 
         // Render timeline milestones
         let milestonesHTML = '<div class="tracker-timeline-flow">';
-        if (data.timeline) {
+        if (data.timeline && Array.isArray(data.timeline)) {
             data.timeline.forEach((milestone, mIdx) => {
                 milestonesHTML += `
                     <div class="tracker-flow-node">
@@ -2435,99 +2449,163 @@ function saveSettings() {
 
 document.addEventListener('DOMContentLoaded', () => {
     // Render Case Tracker Dashboard
-    renderCaseDashboard();
-
-    // Render language globe switcher options
-    renderLanguageDropdown();
-
-    // Language selector toggle
-    const langMenuBtn = document.getElementById('lang-menu-btn');
-    const langDropdown = document.getElementById('lang-dropdown');
-    
-    if (langMenuBtn && langDropdown) {
-        langMenuBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            langDropdown.classList.toggle('active');
-        });
+    try {
+        renderCaseDashboard();
+    } catch (e) {
+        console.error("Error in renderCaseDashboard:", e);
     }
 
-    // Close language dropdown on outside clicks
-    document.addEventListener('click', (e) => {
-        if (langDropdown && !langDropdown.contains(e.target) && e.target !== langMenuBtn) {
-            langDropdown.classList.remove('active');
+    // Render language globe switcher options
+    try {
+        renderLanguageDropdown();
+    } catch (e) {
+        console.error("Error in renderLanguageDropdown:", e);
+    }
+
+    // Language selector toggle
+    try {
+        const langMenuBtn = document.getElementById('lang-menu-btn');
+        const langDropdown = document.getElementById('lang-dropdown');
+        
+        if (langMenuBtn && langDropdown) {
+            langMenuBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                langDropdown.classList.toggle('active');
+            });
         }
-    });
+
+        // Close language dropdown on outside clicks
+        document.addEventListener('click', (e) => {
+            if (langDropdown && !langDropdown.contains(e.target) && e.target !== langMenuBtn) {
+                langDropdown.classList.remove('active');
+            }
+        });
+    } catch (e) {
+        console.error("Error setting up language dropdown listeners:", e);
+    }
 
     // Initialize Quotes rotator & voice mic simulation
-    startQuoteRotation();
-    setupVoiceMic();
+    try {
+        startQuoteRotation();
+    } catch (e) {
+        console.error("Error in startQuoteRotation:", e);
+    }
+    try {
+        setupVoiceMic();
+    } catch (e) {
+        console.error("Error in setupVoiceMic:", e);
+    }
 
     // Initialize the onboarding flow
-    initLifeNavigator();
+    try {
+        initLifeNavigator();
+    } catch (e) {
+        console.error("Error in initLifeNavigator:", e);
+    }
 
     // Scroll handler for navbar transparent/scrolled transition
-    window.addEventListener('scroll', handleScroll);
+    try {
+        window.addEventListener('scroll', handleScroll);
+    } catch (e) {
+        console.error("Error adding scroll listener:", e);
+    }
 
     // Northeast Special cards click
-    document.querySelectorAll('.ne-card.clickable-card').forEach(card => {
-        card.addEventListener('click', () => {
-            const category = card.dataset.neCategory;
-            if (category) {
-                handleNECardClick(category);
-            }
+    try {
+        document.querySelectorAll('.ne-card.clickable-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const category = card.dataset.neCategory;
+                if (category) {
+                    handleNECardClick(category);
+                }
+            });
         });
-    });
+    } catch (e) {
+        console.error("Error in Northeast Special cards listeners:", e);
+    }
 
     // Chat input auto-resizing
-    const chatInput = document.getElementById('chat-input');
-    if (chatInput) {
-        chatInput.addEventListener('input', () => autoResize(chatInput));
-        chatInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                handleSend();
-            }
-        });
+    try {
+        const chatInput = document.getElementById('chat-input');
+        if (chatInput) {
+            chatInput.addEventListener('input', () => autoResize(chatInput));
+            chatInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSend();
+                }
+            });
+        }
+    } catch (e) {
+        console.error("Error in chat input listeners:", e);
     }
 
     // Send button event
-    const sendBtn = document.getElementById('send-btn');
-    if (sendBtn) {
-        sendBtn.addEventListener('click', handleSend);
+    try {
+        const sendBtn = document.getElementById('send-btn');
+        if (sendBtn) {
+            sendBtn.addEventListener('click', handleSend);
+        }
+    } catch (e) {
+        console.error("Error in send button listener:", e);
     }
 
     // Hero start CTA scroll
-    const startBtn = document.getElementById('start-btn');
-    if (startBtn) {
-        startBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            const targetSection = document.getElementById('life-navigator');
-            if (targetSection) {
-                targetSection.scrollIntoView({ behavior: 'smooth' });
-            }
-        });
+    try {
+        const startBtn = document.getElementById('start-btn');
+        if (startBtn) {
+            startBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetSection = document.getElementById('life-navigator');
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        }
+    } catch (e) {
+        console.error("Error in hero start CTA scroll:", e);
     }
 
     // Example queries in chat NLU click
-    attachExampleListeners();
+    try {
+        attachExampleListeners();
+    } catch (e) {
+        console.error("Error in attachExampleListeners:", e);
+    }
 
     // Initialize Document Gap Detector panel
-    initGapDetector();
+    try {
+        initGapDetector();
+    } catch (e) {
+        console.error("Error in initGapDetector:", e);
+    }
 
     // Scroll animations setup
-    setupScrollAnimations();
+    try {
+        setupScrollAnimations();
+    } catch (e) {
+        console.error("Error in setupScrollAnimations:", e);
+    }
 
     // Mobile menu toggle
-    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-    if (mobileMenuBtn) {
-        mobileMenuBtn.addEventListener('click', () => {
-            const navLinks = document.querySelector('.nav-links');
-            if (navLinks) {
-                navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-            }
-        });
+    try {
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', () => {
+                const navLinks = document.querySelector('.nav-links');
+                if (navLinks) {
+                    navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+                }
+            });
+        }
+    } catch (e) {
+        console.error("Error in mobile menu toggle:", e);
     }
 
     // Trigger AI status evaluation
-    updateAIStatusBadge();
+    try {
+        updateAIStatusBadge();
+    } catch (e) {
+        console.error("Error in updateAIStatusBadge:", e);
+    }
 });
